@@ -1,0 +1,44 @@
+{
+    "0": {
+        "comment": "hallo",
+        "timestamp": "2024-12-23 13:38:10",
+        "likes": 21,
+        "dislikes": 3,
+        "userInteractions": [
+            "127.0.0.1"
+        ]
+    },
+    "1": {
+        "comment": "test",
+        "timestamp": "2024-12-23 15:06:50",
+        "likes": 0,
+        "dislikes": 1,
+        "userInteractions": [
+            {
+                "userId": "127.0.0.1",
+                "type": "dislike"
+            }
+        ]
+    },
+    "2": {
+        "comment": "servus",
+        "timestamp": "2024-12-23 15:12:45",
+        "likes": 0,
+        "dislikes": 0
+    },
+    "3": {
+        "comment": "griaß euch",
+        "timestamp": "2024-12-23 15:14:32",
+        "likes": 0,
+        "dislikes": 0
+    },
+    "id": "article_67697380709b4",
+    "title": "Untitled",
+    "author": "Unknown",
+    "content": "",
+    "image": "default.jpg",
+    "date": "2024-12-23 15:28:16",
+    "likes": 0,
+    "dislikes": 0,
+    "userInteractions": []
+}

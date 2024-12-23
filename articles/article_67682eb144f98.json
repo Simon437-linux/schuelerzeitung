@@ -4,5 +4,8 @@
     "author": "Simon",
     "content": "&lt;div class=&quot;article&quot;&gt;\r\n    &lt;h2 id=&quot;article-title&quot;&gt;Titel des Artikels&lt;\/h2&gt;\r\n    &lt;p id=&quot;article-author&quot;&gt;Autor: Max Mustermann&lt;\/p&gt;\r\n    &lt;img id=&quot;author-image&quot; src=&quot;..\/authors\/max_mustermann.jpg&quot; alt=&quot;Bild von Max Mustermann&quot; \/&gt;\r\n&lt;\/div&gt;\r\n",
     "image": "wave-Dark-ubuntu.png",
-    "date": "2024-12-22 16:22:25"
+    "date": "2024-12-22 16:22:25",
+    "likes": 0,
+    "dislikes": 0,
+    "userInteractions": []
 }

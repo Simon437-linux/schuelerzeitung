@@ -17,7 +17,7 @@ form.addEventListener("submit", async (e) => {
             alert("Artikel erfolgreich gespeichert!");
             form.reset();
         } else {
-            alert("Fehler beim Speichern des Artikels.");
+            alert("Fehler beim Speichern des Artikels: " + result.error);
         }
     } catch (error) {
         console.error("Fehler:", error);
