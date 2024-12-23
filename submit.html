@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Artikel erstellen</title>
+</head>
+<body>
+    <header>
+        <h1>Artikel erstellen</h1>
+    </header>
+    <main>
+        <form id="article-form">
+            <input type="text" name="title" placeholder="Titel des Artikels" required>
+            <input type="text" name="author" placeholder="Autor" required>
+            <textarea name="content" placeholder="Artikelinhalt" required></textarea>
+            <input type="file" name="image" accept="image/*" required>
+            <button type="submit">Artikel speichern</button>
+        </form>        
+    </main>
+    <script src="scripts/submit.js"></script>
+</body>
+</html>
