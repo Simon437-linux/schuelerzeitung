@@ -12,9 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             articleContainer.innerHTML = `
                 <h1>${article.title}</h1>
-                <p><strong>Autor:</strong> <img src="author_images/${article.authorImage}" alt="${article.author}" class="author-image"> ${article.author}</p>
-                <p>${article.content}</p>
+                <p><strong>Von:</strong> ${article.author}</p>
                 <img src="articles/${article.image}" alt="${article.title}">
+                <p>${article.content}</p>
                 <p><strong>Veröffentlicht am:</strong> ${article.date}</p>
                 <button onclick="updateArticleLike('like')">Gefällt mir</button>
                 <button onclick="updateArticleLike('dislike')">Gefällt mir nicht</button>
@@ -54,7 +54,7 @@ async function updateArticleLike(type) {
 
                 articleContainer.innerHTML = `
                     <h1>${article.title}</h1>
-                    <p><strong>Autor:</strong> <img src="author_images/${article.authorImage}" alt="${article.author}" class="author-image"> ${article.author}</p>
+                    <p><strong>Von:</strong> ${article.author}</p>
                     <p>${article.content}</p>
                     <img src="articles/${article.image}" alt="${article.title}">
                     <p><strong>Veröffentlicht am:</strong> ${article.date}</p>

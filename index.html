@@ -11,6 +11,13 @@
         <h1>Schülerzeitung</h1>
     </header>
     <input type="text" id="search-bar" placeholder="Artikel suchen...">
+    <select id="category-filter">
+        <option value="">Alle Kategorien</option>
+        <option value="Health">Gesundheit</option>
+        <option value="Technology">Technologie</option>
+        <option value="Education">Bildung</option>
+        <!-- Weitere Kategorien hier hinzufügen -->
+    </select>
     <div id="articles-container">
         <!-- Neuester Artikel -->
         <div class="latest-article">
@@ -21,8 +28,8 @@
         <div class="older-articles">
           <!-- Hier platzieren Sie Ihre älteren Artikel -->
         </div>
-      </div>
-      
+    </div>
+    
     <script src="scripts/script.js"></script>
 </body>
 </html>

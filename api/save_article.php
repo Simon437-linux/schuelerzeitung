@@ -6,6 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content = htmlspecialchars($_POST['content'], ENT_QUOTES, 'UTF-8');
     $image = $_FILES['image'];
     $password = $_POST['password'];
+    $category = htmlspecialchars($_POST['category'], ENT_QUOTES, 'UTF-8');
 
     // Passwort überprüfen
     $correctPassword = 'Schülerzeitung'; // Set your secure password here
@@ -16,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validierung
-    if (!$title || !$author || !$content || !$image || $image['error'] !== UPLOAD_ERR_OK) {
+    if (!$title || !$author || !$content || !$image || $image['error'] !== UPLOAD_ERR_OK || !$category) {
         http_response_code(400);
-        echo json_encode(['error' => 'Alle Felder müssen korrekt ausgefüllt werden, einschließlich des Bildes.']);
+        echo json_encode(['error' => 'Alle Felder müssen korrekt ausgefüllt werden, einschließlich des Bildes und der Kategorie.']);
         exit;
     }
 
@@ -42,12 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Autorbild automatisch zuweisen
-    $authorImageName = str_replace(' ', '_', strtolower($author)) . '.jpg'; // Convert author name to lowercase and replace spaces with underscores
-    if (!file_exists($authorImagesDir . '/' . $authorImageName)) {
-        $authorImageName = 'default.jpg'; // Fallback to a default image if the author's image is not found
-    }
-
     // Artikel-Daten vorbereiten
     $article = [
         'id' => uniqid('article_'),
@@ -59,7 +54,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'date' => date('Y-m-d H:i:s'),
         'likes' => 0,
         'dislikes' => 0,
-        'userInteractions' => []
+        'userInteractions' => [],
+        'category' => $category
     ];
 
     // Artikel in JSON-Datei speichern

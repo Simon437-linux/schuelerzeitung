@@ -17,8 +17,15 @@
             <textarea name="content" placeholder="Artikelinhalt" required></textarea>
             <input type="file" name="image" accept="image/*" required>
             <input type="password" name="password" placeholder="Passwort" required>
+            <select name="category" required>
+                <option value="">Kategorie wählen</option>
+                <option value="Technology">Technology</option>
+                <option value="Science">Science</option>
+                <option value="Health">Health</option>
+                <!-- Add more categories as needed -->
+            </select>
             <button type="submit">Artikel speichern</button>
-        </form>        
+        </form>       
     </main>
     <script src="scripts/submit.js"></script>
 </body>
