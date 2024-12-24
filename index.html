@@ -9,7 +9,17 @@
 <body>
     <header>
         <div class="header-container">
-            <input type="text" id="search-bar" placeholder="Artikel suchen...">
+            <button id="menu-toggle">☰</button>
+            <nav id="category-menu" class="hidden">
+                <input type="text" id="search-bar" placeholder="Artikel suchen...">
+                <ul>
+                    <li><a href="#" data-category="">Alle alten Artikel</a></li>
+                    <li><a href="#" data-category="Health">Gesundheit</a></li>
+                    <li><a href="#" data-category="Technology">Technologie</a></li>
+                    <li><a href="#" data-category="Education">Bildung</a></li>
+                    <li><a href="#" data-category="Science">Wissenschaft</a></li>
+                </ul>
+            </nav>
             <h1>Schülerzeitung</h1>
         </div>
     </header>
@@ -23,12 +33,6 @@
         <div class="older-articles">
         </div>
     </div>
-    <select id="category-filter">
-        <option value="">Alle Kategorien</option>
-        <option value="Health">Gesundheit</option>
-        <option value="Technology">Technologie</option>
-        <option value="Education">Bildung</option>
-    </select>
     <script src="scripts/script.js"></script>
 </body>
 </html>

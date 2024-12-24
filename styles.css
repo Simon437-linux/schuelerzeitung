@@ -11,6 +11,7 @@ body {
 }
 
 /* Positionierung der Suchleiste und Kategorienleiste im Header */
+/* Positionierung der Suchleiste und Kategorienleiste im Header */
 header {
   display: flex;
   justify-content: center;
@@ -21,21 +22,78 @@ header {
   font-size: x-large;
   text-align: center;
   margin-top: 15px;
+  position: relative;
 }
 
 .header-container {
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: center;
+  position: relative;
+}
+
+#menu-toggle {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  padding-left: 150px;
+  cursor: pointer;
+  font-size: 2.5em;
+  position: absolute;
+  left: 10px;
+}
+
+#menu-toggle:hover {
+  color: rgb(236, 236, 236);
+}
+
+.hidden {
+  display: none;
+}
+
+#category-menu {
+  background-color: #272727;
+  border-radius: 5px;
+  padding: 10px;
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  width: 200px;
+}
+
+#category-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+}
+
+#category-menu li {
+  margin-bottom: 10px;
+}
+
+#category-menu a {
+  text-decoration: none;
+  color: #ffffff;
+  padding: 5px 10px;
+  display: block;
+}
+
+#category-menu a:hover {
+  background-color: #333;
 }
 
 #search-bar {
-  margin-right: 20px;
+  width: 500%;
+  margin-bottom: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 1.2em;
   background-color: #161616;
   color: #ffffff;
-  height: 20px;
+  padding: 10px;
+  box-sizing: content-box;
+  margin: 0 10px;
 }
 
 header h1 {
@@ -57,8 +115,6 @@ header h1 {
   font-size: 1em;
   border: 1px solid #ddd;
   border-radius: 5px;
-  padding: 5px 10px;
-  background-color: #161616;
 }
 
 #category-nav a:hover {

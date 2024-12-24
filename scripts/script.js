@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const latestArticleContainer = document.createElement("div");
     const olderArticlesContainer = document.createElement("div");
     const searchBar = document.getElementById("search-bar");
-    const categoryFilter = document.getElementById("category-filter");
+    const categoryMenu = document.getElementById("category-menu");
+    const menuToggle = document.getElementById("menu-toggle");
 
     // Klassen für die neuen Container hinzufügen
     latestArticleContainer.classList.add("latest-article");
@@ -31,15 +32,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Suchleiste: Filterung bei Benutzereingabe
     searchBar.addEventListener("input", () => {
         const query = searchBar.value.toLowerCase();
-        const selectedCategory = categoryFilter.value;
-        filterAndDisplayArticles(query, selectedCategory);
+        filterAndDisplayArticles(query, "");
     });
 
-    // Kategorienfilter: Filterung bei Auswahländerung
-    categoryFilter.addEventListener("change", () => {
-        const query = searchBar.value.toLowerCase();
-        const selectedCategory = categoryFilter.value;
-        filterAndDisplayArticles(query, selectedCategory);
+    // Kategorienmenü: Filterung bei Klick auf eine Kategorie
+    categoryMenu.addEventListener("click", (event) => {
+        if (event.target.tagName === "A") {
+            event.preventDefault();
+            const category = event.target.getAttribute("data-category").toLowerCase();
+            filterAndDisplayArticles("", category);
+        }
+    });
+
+    // Menü-Button: Ein-/Ausblenden des Menüs
+    menuToggle.addEventListener("click", () => {
+        categoryMenu.classList.toggle("hidden");
     });
 
     /**
