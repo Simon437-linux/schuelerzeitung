@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Referenzen auf wichtige DOM-Elemente
     const articlesContainer = document.getElementById("articles-container");
     const latestArticleContainer = document.createElement("div");
     const olderArticlesContainer = document.createElement("div");
@@ -13,67 +14,91 @@ document.addEventListener("DOMContentLoaded", () => {
     articlesContainer.appendChild(latestArticleContainer);
     articlesContainer.appendChild(olderArticlesContainer);
 
-    let articles = [];
+    let articles = []; // Variable zum Speichern der geladenen Artikel
 
+    // Artikel von der API laden
     fetch("api/load_articles.php")
         .then(response => response.json())
         .then(data => {
-            articles = data;
-            displayArticles(articles);
+            articles = data; // Speichere die geladenen Artikel
+            displayArticles(articles); // Zeige alle Artikel initial an
         })
-        .catch(error => console.error("Fehler beim Laden der Artikel:", error));
+        .catch(error => {
+            console.error("Fehler beim Laden der Artikel:", error);
+            articlesContainer.innerHTML = "<p>Fehler beim Laden der Artikel. Bitte versuchen Sie es später erneut.</p>";
+        });
 
-    searchBar.addEventListener("input", (e) => {
-        const query = e.target.value.toLowerCase();
-        filterAndDisplayArticles(query, categoryFilter.value);
+    // Suchleiste: Filterung bei Benutzereingabe
+    searchBar.addEventListener("input", () => {
+        const query = searchBar.value.toLowerCase();
+        const selectedCategory = categoryFilter.value;
+        filterAndDisplayArticles(query, selectedCategory);
     });
 
-    categoryFilter.addEventListener("change", (e) => {
-        filterAndDisplayArticles(searchBar.value.toLowerCase(), e.target.value);
+    // Kategorienfilter: Filterung bei Auswahländerung
+    categoryFilter.addEventListener("change", () => {
+        const query = searchBar.value.toLowerCase();
+        const selectedCategory = categoryFilter.value;
+        filterAndDisplayArticles(query, selectedCategory);
     });
 
+    /**
+     * Filter- und Anzeige-Funktion
+     * @param {string} query Suchanfrage (Text)
+     * @param {string} category Kategorie (aus dem Dropdown)
+     */
     function filterAndDisplayArticles(query, category) {
-        console.log("Filter query:", query);
-        console.log("Filter category:", category);
-        const filteredArticles = articles.filter(article => 
-            article.title.toLowerCase().includes(query) &&
-            (category === "" || article.category === category)
-        );
+        const filteredArticles = articles.filter(article => {
+            const matchesQuery = article.title.toLowerCase().includes(query);
+            const matchesCategory = category === "" || article.category.toLowerCase() === category.toLowerCase();
+            return matchesQuery && matchesCategory;
+        });
+
         displayArticles(filteredArticles);
     }
 
-    function displayArticles(articles) {
-        latestArticleContainer.innerHTML = "";
-        olderArticlesContainer.innerHTML = "";
+    /**
+     * Funktion zum Anzeigen der Artikel
+     * @param {Array} articlesToDisplay Die anzuzeigenden Artikel
+     */
+    function displayArticles(articlesToDisplay) {
+        latestArticleContainer.innerHTML = ""; // Container leeren
+        olderArticlesContainer.innerHTML = ""; // Container leeren
 
-        if (articles.length === 0) {
+        if (articlesToDisplay.length === 0) {
             articlesContainer.innerHTML = "<p>Keine Artikel verfügbar.</p>";
             return;
         }
 
         // Artikel nach Datum sortieren (neueste zuerst)
-        articles.sort((a, b) => new Date(b.date) - new Date(a.date));
+        articlesToDisplay.sort((a, b) => new Date(b.date) - new Date(a.date));
 
         // Neuester Artikel hervorheben
-        const latestArticle = articles.shift(); // Entfernt den ersten Artikel aus dem Array
+        const latestArticle = articlesToDisplay.shift(); // Entfernt den ersten Artikel aus dem Array
         latestArticleContainer.innerHTML = `
-            <img src="articles/${latestArticle.image}" alt="${latestArticle.title}">
-            <h1>${latestArticle.title}</h1>
-            <p>${latestArticle.content.substring(0, 200)}...</p>
-            <p><strong>Von:</strong> ${latestArticle.author}</p>
-            <p><strong>Kategorie:</strong> ${latestArticle.category}</p>
-            <a href="article.html?id=${latestArticle.id}">Weiterlesen</a>
+            <div class="latest-article-image">
+                <img src="articles/${latestArticle.image}" alt="${latestArticle.title}">
+            </div>
+            <div class="latest-article-content">
+                <h1>${latestArticle.title}</h1>
+                <p>${latestArticle.content.substring(0, 200)}...</p>
+                <p><strong>Von:</strong> ${latestArticle.author}</p>
+                <p><strong>Kategorie:</strong> ${latestArticle.category}</p>
+                <a href="article.html?id=${latestArticle.id}">Weiterlesen</a>
+            </div>
         `;
 
         // Ältere Artikel darstellen
-        articles.forEach(article => {
+        articlesToDisplay.forEach(article => {
             const articleElement = document.createElement("div");
             articleElement.classList.add("article");
             articleElement.innerHTML = `
-                <img src="articles/${article.image}" alt="${article.title}">
-                <div>
+                <div class="article-image">
+                    <img src="articles/${article.image}" alt="${article.title}">
+                </div>
+                <div class="article-content">
                     <h2>${article.title}</h2>
-                    <p>${article.content.substring(0, 100)}...</p>
+                    <p>${article.content.substring(0, 150)}...</p>
                     <p><strong>Von:</strong> ${article.author}</p>
                     <p><strong>Kategorie:</strong> ${article.category}</p>
                     <a href="article.html?id=${article.id}">Weiterlesen</a>
