@@ -1,0 +1,15 @@
+[
+    {
+        "name": "Simon",
+        "comment": "sch\u00f6n geschrieben",
+        "timestamp": "2024-12-25 14:59:52",
+        "likes": 0,
+        "dislikes": 1,
+        "userInteractions": [
+            {
+                "userId": "127.0.0.1",
+                "type": "dislike"
+            }
+        ]
+    }
+]

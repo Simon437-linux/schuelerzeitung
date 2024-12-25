@@ -84,16 +84,17 @@ header {
 }
 
 #search-bar {
-  width: 500%;
+  width: 80%;
   margin-bottom: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 1.2em;
+  font-size: 1em;
   background-color: #161616;
   color: #ffffff;
-  padding: 10px;
+  padding: 5px;
   box-sizing: content-box;
   margin: 0 10px;
+  border-radius: 5px;
 }
 
 header h1 {
@@ -130,7 +131,7 @@ header .search-container {
 
 #articles-container {
   max-width: 1200px;
-  margin: 20px auto;
+  margin: 50px auto;
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -233,7 +234,9 @@ header {
 body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   margin: 0;
-  padding-left: 200px;
+  padding-left: 200px;#category-filter {
+    float: right;
+  }
   padding-right: 200px;
   background-color: #161616;
   color: #ffffff;
@@ -264,13 +267,17 @@ header {
   padding-bottom: 20px;
 }
 
-.latest-article-image img {
-  width: 100%;
+.latest-article-image img {#category-filter {
+  float: right;
+}
+  width: 600px;
+  max-width: 600px;
   border-radius: 5px;
+  padding-bottom: 0;
 }
 
 .latest-article-content {
-  padding: 50px;
+  padding-top: 0;
   width: 400%;
 }
 
@@ -302,24 +309,6 @@ header {
   background-color: #ffffff;
   color: #000000;
   transition: 0.3s linear;
-}
-
-/* Suchleiste und Kategorienfilter */
-#search-bar, #category-filter {
-  width: 10px;
-  padding: 10px;
-  margin: 10px 5px;
-  border: 1px solid #ffffff;
-  border-radius: 5px;
-  font-size: 1em;
-}
-
-#search-bar {
-  justify-content: left;
-}
-
-#category-filter {
-  float: right;
 }
 
 .clearfix::after {
@@ -413,22 +402,6 @@ header {
 }
 
 /* Suchleiste und Kategorienfilter */
-#search-bar, #category-filter {
-  width: calc(50% - 10px);
-  padding: 10px;
-  margin: 10px 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1em;
-}
-
-#search-bar {
-  float: left;
-}
-
-#category-filter {
-  float: right;
-}
 
 .clearfix::after {
   content: "";
@@ -439,4 +412,130 @@ header {
   background-color: #ffffff;
   color: #000000;
   transition: 0.3s linear;
+}
+
+#article-container .article-image img {
+  width: 1100px;
+  height: auto;
+  display: block;
+  margin: 20px;
+}
+
+#article-container p {
+  line-height: 1.4;
+  margin-bottom: 10px;
+  margin-right: 200px;
+}
+
+#article-container h1 {
+  margin-bottom: 20px;
+}
+
+#article-container .article-meta {
+  margin-bottom: 15px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+.comments-section {
+  margin-top: 40px;
+}
+
+.comments-section h2 {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.comment {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.comment-author {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.comment-date {
+  font-size: 0.8em;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+.comment-content {
+  line-height: 1.4;
+}
+
+.like-button, .dislike-button {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.dislike, .like {
+  background-color: #161616;
+  color: white;
+  border-radius: 3px;
+  border: 0 solid #161616;
+  margin-bottom: 15px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.dislike, .like:hover {
+  cursor: pointer;
+}
+
+.comment_speichern {
+  border: 1px solid white;
+  color: white;
+  background-color: #161616;
+  border-radius: 5px;
+  transition: 0.3s linear;
+  display: inline-block;
+  margin-top: 5px;
+  padding: 5px 10px;
+}
+
+.comment_speichern:hover {
+  background-color: white;
+  color: #000000;
+  transition: 0.3s linear;
+  cursor: pointer;
+}
+
+.comments_area {
+  background-color: #161616;
+  color: white;
+  margin-right: 2000px;
+  height: 40px;
+  width: 90%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+.comment-date {
+  font-size: 0.8em;
+  color: #999;
+  margin-top: 5px;
+  display: block;
+}
+
+.latest-article-content p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.latest-article-content p strong {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.article-content p strong {
+  display: inline-block;
+  margin-right: 10px;
 }

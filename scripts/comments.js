@@ -1,7 +1,9 @@
 async function saveComment(event) {
     event.preventDefault();
 
+    const nameInput = document.querySelector('#name');
     const commentInput = document.querySelector('#comment');
+    const name = nameInput.value;
     const comment = commentInput.value;
     const articleId = new URLSearchParams(window.location.search).get("id");
 
@@ -13,12 +15,13 @@ async function saveComment(event) {
     const response = await fetch(`api/save_comment.php?article_id=${articleId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ comment: comment })
+        body: JSON.stringify({ name: name, comment: comment })
     });
 
     const result = await response.json();
 
     if (result.success) {
+        nameInput.value = '';
         commentInput.value = '';
         loadComments();
     } else {
@@ -31,26 +34,22 @@ async function loadComments() {
     const response = await fetch(`api/save_comment.php?article_id=${articleId}`);
     const comments = await response.json();
 
-    // Sortiere die Kommentare nach Timestamp, neueste zuerst
-    comments.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
     const commentsList = document.querySelector('#comments-list');
     commentsList.innerHTML = '';
 
     comments.forEach((entry, index) => {
         const listItem = document.createElement('li');
         listItem.innerHTML = `
-            <strong>${entry.timestamp}:</strong> ${entry.comment} 
+            <strong>${entry.name}:</strong> ${entry.comment} 
             <br>
-            <button onclick="updateLike(${index}, 'like')">Gefällt mir</button> 
-            <button onclick="updateLike(${index}, 'dislike')">Gefällt mir nicht</button>
-            <span id="likes-${index}">👍 ${entry.likes || 0}</span>
-            <span id="dislikes-${index}">👎 ${entry.dislikes || 0}</span>
+            <span class="comment-date">${entry.timestamp}</span>
+            <br>
+            <button class="like" onclick="updateLike(${index}, 'like')"><span id="likes-${index}">👍 ${entry.likes || 0}</span></button> 
+            <button class="dislike" onclick="updateLike(${index}, 'dislike')"><span id="dislikes-${index}">👎 ${entry.dislikes || 0}</span></button>
         `;
         commentsList.appendChild(listItem);
     });
 }
-
 
 async function updateLike(index, type) {
     const articleId = new URLSearchParams(window.location.search).get("id");

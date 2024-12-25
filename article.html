@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artikel ansehen</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <a href="index.html"><p>zurück zu den Artikeln</p></a>
-    <div id="article-container"></div>
-    <form onsubmit="saveComment(event)">
-        <label for="comment">Kommentar:</label>
-        <textarea name="comment" id="comment" rows="5" cols="30"></textarea>
-        <br>
-        <button type="submit">Speichern</button>
-    </form>
+    <header>
+        <a href="index.html" class="back-link">← Zurück zu den Artikeln</a>
+    </header>
+    <main>
+        <div id="article-container" class="article-container"></div>
+        <form onsubmit="saveComment(event)" class="comment-form">
+            <label for="name">Name:</label>
+            <input class="name" type="text" name="name" id="name" required>
+            <label for="comment">Kommentar:</label>
+            <textarea class="comments_area" name="comment" id="comment" rows="5" cols="30"></textarea>
+            <br>
+            <button type="submit" class="comment_speichern">Speichern</button>
+        </form>
+        
+        <ul id="comments-list"></ul>
 
-    <!-- Kommentare unter dem Formular -->
-    <h2>Bisherige Kommentare:</h2>
-    <ul id="comments-list"></ul>
-    
+    </main>
     <script src="scripts/article.js"></script>
     <script src="scripts/comments.js"></script>
 </body>

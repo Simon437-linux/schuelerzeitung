@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p>${latestArticle.content.substring(0, 200)}...</p>
                 <p><strong>Von:</strong> ${latestArticle.author}</p>
                 <p><strong>Kategorie:</strong> ${latestArticle.category}</p>
+                <p><strong>Likes:</strong> ${latestArticle.likes} | <strong>Kommentare:</strong> ${latestArticle.commentCount}</p>
                 <a href="article.html?id=${latestArticle.id}">Weiterlesen</a>
             </div>
         `;
@@ -108,6 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p>${article.content.substring(0, 150)}...</p>
                     <p><strong>Von:</strong> ${article.author}</p>
                     <p><strong>Kategorie:</strong> ${article.category}</p>
+                    <p><strong>Likes:</strong> ${article.likes} | <strong>Kommentare:</strong> ${article.commentCount}</p>
                     <a href="article.html?id=${article.id}">Weiterlesen</a>
                 </div>
             `;

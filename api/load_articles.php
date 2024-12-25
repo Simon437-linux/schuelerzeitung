@@ -11,6 +11,12 @@ if (is_dir($articlesDir)) {
         // Filter out files that do not have the required article fields or have empty title/content
         if (isset($article['id'], $article['title'], $article['author'], $article['content']) &&
             !empty($article['title']) && !empty($article['content'])) {
+            
+            // Count comments
+            $commentsFile = $articlesDir . '/' . $article['id'] . '_comments.json';
+            $comments = file_exists($commentsFile) ? json_decode(file_get_contents($commentsFile), true) : [];
+            $article['commentCount'] = count($comments);
+
             $articles[] = $article;
         }
     }

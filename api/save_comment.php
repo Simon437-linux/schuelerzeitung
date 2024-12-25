@@ -22,6 +22,7 @@ function saveComments($file, $data)
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
+    $name = $input['name'] ?? 'Anonym';
     $comment = $input['comment'] ?? '';
 
     if (empty(trim($comment))) {
@@ -32,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $comments = loadComments($commentsFile);
 
     $comments[] = [
+        'name' => htmlspecialchars($name),
         'comment' => htmlspecialchars($comment),
         'timestamp' => date('Y-m-d H:i:s'),
         'likes' => 0,
