@@ -7,56 +7,59 @@
     <title>Artikel erstellen</title>
     <script src="https://cdn.tiny.cloud/1/lyeu8216j58bfcg4vu4t6d48ev74csdvss7z2qcug46vrves/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
-        tinymce.init({
-          selector: 'textarea[name="content"]',
-          plugins: [
-            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-            'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
-          ],
-          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-          tinycomments_mode: 'embedded',
-          tinycomments_author: 'Author name',
-          mergetags_list: [
-            { value: 'First.Name', title: 'First Name' },
-            { value: 'Email', title: 'Email' },
-          ],
-          ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
-          images_upload_url: 'api/upload_images.php', // URL zum Hochladen von Bildern
-          automatic_uploads: true,
-          images_upload_handler: function (blobInfo, success, failure) {
-            let formData = new FormData();
-            formData.append('file', blobInfo.blob(), blobInfo.filename());
+        document.addEventListener('DOMContentLoaded', function() {
+            const author = localStorage.getItem('author');
+            const password = localStorage.getItem('password');
 
-            fetch('api/upload_images.php', {
-              method: 'POST',
-              body: formData
-            })
-            .then(response => response.json())
-            .then(result => {
-              if (result.success) {
-                success(result.filePath);
-              } else {
-                failure(result.message);
-              }
-            })
-            .catch(error => {
-              failure('Image upload failed: ' + error.message);
+            // Überprüfen Sie die Anmeldeinformationen
+            if (!author || !password || password !== 'Schülerzeitung') {
+                alert('Ungültige Anmeldeinformationen. Bitte melden Sie sich erneut an.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Initialisieren Sie den TinyMCE-Editor
+            tinymce.init({
+                selector: 'textarea[name="content"]',
+                plugins: [
+                    'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+                    'checklist', 'mediaembed', 'casechange', 'export', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+                ],
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                tinycomments_mode: 'embedded',
+                tinycomments_author: 'Author name',
+                mergetags_list: [
+                    { value: 'First.Name', title: 'First Name' },
+                    { value: 'Email', title: 'Email' },
+                ]
             });
-          }
+
+            // Verstecken Sie die Felder für den Namen und das Passwort
+            document.getElementById('author-field').style.display = 'none';
+            document.getElementById('password-field').style.display = 'none';
         });
-      </script>
+    </script>
 </head>
 <body>
     <header>
         <h1>Artikel erstellen</h1>
     </header>
     <main>
-        <form id="article-form">
+        <form id="article-form" enctype="multipart/form-data">
+            <div id="author-field">
+                <label for="author">Autor:</label>
+                <input type="text" name="author" id="author">
+            </div>
+            <div id="password-field">
+                <label for="password">Passwort:</label>
+                <input type="password" name="password" id="password">
+            </div>
             <input type="text" name="title" placeholder="Titel des Artikels" required>
-            <input type="text" name="author" placeholder="Autor" required>
             <textarea name="content" placeholder="Artikelinhalt" required></textarea>
-            <input type="file" name="image" accept="image/*" required>
-            <input type="password" name="password" placeholder="Passwort" required>
+            <label for="main_image">Hauptbild:</label>
+            <input type="file" name="main_image" accept="image/*" required>
+            <label for="images">Zusätzliche Bilder:</label>
+            <input type="file" name="images[]" accept="image/*" multiple>
             <select name="category" required>
                 <option value="">Kategorie wählen</option>
                 <option value="Technology">Technology</option>
@@ -65,7 +68,7 @@
                 <!-- Add more categories as needed -->
             </select>
             <button type="submit">Artikel speichern</button>
-        </form>       
+        </form>
     </main>
     <script src="scripts/submit.js"></script>
 </body>

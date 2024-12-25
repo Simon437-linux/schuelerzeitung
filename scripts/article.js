@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const articleId = new URLSearchParams(window.location.search).get("id");
     const articleContainer = document.getElementById("article-container");
+    const galleryContainer = document.getElementById("gallery-container");
 
     fetch(`api/load_article.php?id=${articleId}`)
         .then(response => response.json())
@@ -13,9 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
             articleContainer.innerHTML = `
                 <h1>${article.title}</h1>
                 <p class="article-meta"><strong>Von:</strong> ${article.author} | <strong>Veröffentlicht am:</strong> ${article.date}</p>
-                <div class="article-image">
-                    <img src="articles/${article.image}" alt="${article.title}">
-                </div>
+                <img src="articles/${article.image}" alt="${article.title}" class="main-article-image">
                 <p>${article.content}</p>
                 <button class="like-button" onclick="updateArticleLike('like')">👍</button>
                 <span id="article-likes">${article.likes || 0}</span>
@@ -26,6 +25,30 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div id="comments-container"></div>
                 </div>
             `;
+
+            // Galerie anzeigen
+            if (article.images && article.images.length > 0) {
+                galleryContainer.innerHTML = `
+                    <h2>Galerie</h2>
+                    <div class="gallery">
+                        ${article.images.map(image => `<a href="articles/${image}" data-fancybox="gallery" data-caption="${article.title}"><img src="articles/${image}" alt="Bild"></a>`).join('')}
+                    </div>
+                `;
+
+                // Initialize Fancybox
+                $('[data-fancybox="gallery"]').fancybox({
+                    buttons: [
+                        "slideShow",
+                        "thumbs",
+                        "zoom",
+                        "fullScreen",
+                        "share",
+                        "close"
+                    ],
+                    loop: true,
+                    protect: true
+                });
+            }
 
             // Load comments after the article is loaded
             loadComments();
@@ -60,9 +83,7 @@ async function updateArticleLike(type) {
                 articleContainer.innerHTML = `
                     <h1>${article.title}</h1>
                     <p class="article-meta"><strong>Von:</strong> ${article.author} | <strong>Veröffentlicht am:</strong> ${article.date}</p>
-                    <div class="article-image">
-                        <img src="articles/${article.image}" alt="${article.title}">
-                    </div>
+                    <img src="articles/${article.image}" alt="${article.title}" class="main-article-image">
                     <p>${article.content}</p>
                     <button class="like-button" onclick="updateArticleLike('like')">👍</button>
                     <span id="article-likes">${article.likes || 0}</span>
@@ -73,6 +94,30 @@ async function updateArticleLike(type) {
                         <div id="comments-container"></div>
                     </div>
                 `;
+
+                // Galerie anzeigen
+                if (article.images && article.images.length > 0) {
+                    galleryContainer.innerHTML = `
+                        <h2>Galerie</h2>
+                        <div class="gallery">
+                            ${article.images.map(image => `<a href="articles/${image}" data-fancybox="gallery" data-caption="${article.title}"><img src="articles/${image}" alt="Bild"></a>`).join('')}
+                        </div>
+                    `;
+
+                    // Initialize Fancybox
+                    $('[data-fancybox="gallery"]').fancybox({
+                        buttons: [
+                            "slideShow",
+                            "thumbs",
+                            "zoom",
+                            "fullScreen",
+                            "share",
+                            "close"
+                        ],
+                        loop: true,
+                        protect: true
+                    });
+                }
             })
             .catch(error => {
                 articleContainer.innerHTML = `<p>Fehler beim Laden des Artikels: ${error.message}</p>`;

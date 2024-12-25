@@ -4,7 +4,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = htmlspecialchars($_POST['title'], ENT_QUOTES, 'UTF-8');
     $author = htmlspecialchars($_POST['author'], ENT_QUOTES, 'UTF-8');
     $content = $_POST['content']; // Do not use htmlspecialchars here to keep HTML tags
-    $image = $_FILES['image'];
     $password = $_POST['password'];
     $category = htmlspecialchars($_POST['category'], ENT_QUOTES, 'UTF-8');
 
@@ -17,9 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Validierung
-    if (!$title || !$author || !$content || !$image || $image['error'] !== UPLOAD_ERR_OK || !$category) {
+    if (!$title || !$author || !$content || !$category) {
         http_response_code(400);
-        echo json_encode(['error' => 'Alle Felder müssen korrekt ausgefüllt werden, einschließlich des Bildes und der Kategorie.']);
+        echo json_encode(['error' => 'Alle Felder müssen korrekt ausgefüllt werden, einschließlich der Kategorie.']);
         exit;
     }
 
@@ -33,13 +32,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    // Bilder speichern
-    $imageName = basename($image["name"]);
-    $targetFile = $articlesDir . '/' . $imageName;
-    if (!move_uploaded_file($image['tmp_name'], $targetFile)) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Das Bild konnte nicht hochgeladen werden.']);
-        exit;
+    // Hauptbild speichern
+    $mainImage = '';
+    if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
+        $mainImageName = basename($_FILES['main_image']['name']);
+        $mainImagePath = $articlesDir . '/' . $mainImageName;
+        if (move_uploaded_file($_FILES['main_image']['tmp_name'], $mainImagePath)) {
+            $mainImage = $mainImageName;
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'Das Hauptbild konnte nicht hochgeladen werden.']);
+            exit;
+        }
+    }
+
+    // Zusätzliche Bilder speichern
+    $imageNames = [];
+    if (isset($_FILES['images'])) {
+        foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
+            $imageName = basename($_FILES['images']['name'][$key]);
+            $targetFile = $articlesDir . '/' . $imageName;
+            if (move_uploaded_file($tmp_name, $targetFile)) {
+                $imageNames[] = $imageName;
+            } else {
+                http_response_code(500);
+                echo json_encode(['error' => 'Ein Bild konnte nicht hochgeladen werden.']);
+                exit;
+            }
+        }
     }
 
     // Artikel-Daten vorbereiten
@@ -48,7 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'title' => $title,
         'author' => $author,
         'content' => $content,
-        'image' => $imageName,
+        'image' => $mainImage,
+        'images' => $imageNames,
         'date' => date('Y-m-d H:i:s'),
         'likes' => 0,
         'dislikes' => 0,

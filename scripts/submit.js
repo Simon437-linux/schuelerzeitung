@@ -14,6 +14,12 @@ form.addEventListener("submit", async (e) => {
         return;
     }
 
+    // Set the author and password from local storage
+    const author = localStorage.getItem('author');
+    const password = localStorage.getItem('password');
+    formData.set('author', author);
+    formData.set('password', password);
+
     try {
         const response = await fetch("api/save_article.php", {
             method: "POST",
@@ -26,7 +32,7 @@ form.addEventListener("submit", async (e) => {
         if (result.success) {
             alert("Artikel erfolgreich gespeichert!");
             form.reset();
-            tinymce.activeEditor.setContent(''); // Clear the TinyMCE editor
+            editor.setContent(''); // Clear the TinyMCE editor
         } else {
             alert("Fehler beim Speichern des Artikels: " + result.error);
         }
