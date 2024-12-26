@@ -1,4 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Überprüfen Sie, ob der Benutzer eingeloggt ist
+    const author = localStorage.getItem('author');
+    const password = localStorage.getItem('password');
+    if (!author || !password || password !== 'Schülerzeitung') {
+        window.location.href = 'login.html';
+        return;
+    }
+
     // Referenzen auf wichtige DOM-Elemente
     const articlesContainer = document.getElementById("articles-container");
     const latestArticleContainer = document.createElement("div");

@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Zusätzliche Bilder speichern
     $imageNames = [];
-    if (isset($_FILES['images'])) {
+    if (isset($_FILES['images']) && !empty($_FILES['images']['name'][0])) {
         foreach ($_FILES['images']['tmp_name'] as $key => $tmp_name) {
             $imageName = basename($_FILES['images']['name'][$key]);
             $targetFile = $articlesDir . '/' . $imageName;

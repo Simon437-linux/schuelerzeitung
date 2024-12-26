@@ -1,5 +1,20 @@
 const form = document.getElementById("article-form");
 
+document.addEventListener("DOMContentLoaded", () => {
+    // Überprüfen Sie, ob der Benutzer eingeloggt ist
+    const author = localStorage.getItem('author');
+    const password = localStorage.getItem('password');
+    if (!author || !password || password !== 'Schülerzeitung') {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    // Initialisieren Sie die Schrittweise Anzeige der Felder
+    document.getElementById('step-2').style.display = 'none';
+    document.getElementById('step-3').style.display = 'none';
+    document.getElementById('step-4').style.display = 'none';
+});
+
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(form);
@@ -33,6 +48,11 @@ form.addEventListener("submit", async (e) => {
             alert("Artikel erfolgreich gespeichert!");
             form.reset();
             editor.setContent(''); // Clear the TinyMCE editor
+            // Zurück zum ersten Schritt
+            document.getElementById('step-1').style.display = 'block';
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'none';
+            document.getElementById('step-4').style.display = 'none';
         } else {
             alert("Fehler beim Speichern des Artikels: " + result.error);
         }
@@ -41,3 +61,8 @@ form.addEventListener("submit", async (e) => {
         alert("Ein unerwarteter Fehler ist aufgetreten.");
     }
 });
+
+function showNextStep(currentStep, nextStep) {
+    document.getElementById(currentStep).style.display = 'none';
+    document.getElementById(nextStep).style.display = 'block';
+}

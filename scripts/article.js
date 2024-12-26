@@ -1,4 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Überprüfen Sie, ob der Benutzer eingeloggt ist
+    const author = localStorage.getItem('author');
+    const password = localStorage.getItem('password');
+    if (!author || !password || password !== 'Schülerzeitung') {
+        window.location.href = 'login.html';
+        return;
+    }
+
     const articleId = new URLSearchParams(window.location.search).get("id");
     const articleContainer = document.getElementById("article-container");
     const galleryContainer = document.getElementById("gallery-container");
@@ -46,7 +54,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         "close"
                     ],
                     loop: true,
-                    protect: true
+                    protect: true,
+                    thumbs: {
+                        autoStart: true
+                    }
                 });
             }
 
@@ -115,7 +126,10 @@ async function updateArticleLike(type) {
                             "close"
                         ],
                         loop: true,
-                        protect: true
+                        protect: true,
+                        thumbs: {
+                            autoStart: true
+                        }
                     });
                 }
             })
@@ -152,20 +166,16 @@ function loadComments() {
 }
 
 async function updateCommentLike(commentId, type) {
-    const response = await fetch(`api/update_comment_like.php?comment_id=${commentId}`, {
+    const response = await fetch(`api/update_like.php?article_id=${articleId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: type })
+        body: JSON.stringify({ index: commentId, type: type })
     });
 
     const result = await response.json();
 
     if (result.success) {
-        // Update the like/dislike counts for the comment
-        const likesSpan = document.getElementById(`comment-likes-${commentId}`);
-        const dislikesSpan = document.getElementById(`comment-dislikes-${commentId}`);
-        likesSpan.textContent = result.likes;
-        dislikesSpan.textContent = result.dislikes;
+        loadComments();
     } else {
         alert('Fehler beim Aktualisieren: ' + result.message);
     }

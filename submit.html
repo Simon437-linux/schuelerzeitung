@@ -13,7 +13,6 @@
 
             // Überprüfen Sie die Anmeldeinformationen
             if (!author || !password || password !== 'Schülerzeitung') {
-                alert('Ungültige Anmeldeinformationen. Bitte melden Sie sich erneut an.');
                 window.location.href = 'login.html';
                 return;
             }
@@ -37,7 +36,17 @@
             // Verstecken Sie die Felder für den Namen und das Passwort
             document.getElementById('author-field').style.display = 'none';
             document.getElementById('password-field').style.display = 'none';
+
+            // Initialisieren Sie die Schrittweise Anzeige der Felder
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'none';
+            document.getElementById('step-4').style.display = 'none';
         });
+
+        function showNextStep(currentStep, nextStep) {
+            document.getElementById(currentStep).style.display = 'none';
+            document.getElementById(nextStep).style.display = 'block';
+        }
     </script>
 </head>
 <body>
@@ -46,28 +55,34 @@
     </header>
     <main>
         <form id="article-form" enctype="multipart/form-data">
-            <div id="author-field">
-                <label for="author">Autor:</label>
-                <input type="text" name="author" id="author">
+            <div id="step-1">
+                <label for="title">Titel des Artikels:</label>
+                <input type="text" name="title" id="title" required>
+                <button type="button" onclick="showNextStep('step-1', 'step-2')">Weiter</button>
             </div>
-            <div id="password-field">
-                <label for="password">Passwort:</label>
-                <input type="password" name="password" id="password">
+            <div id="step-2">
+                <label for="content">Inhalt des Artikels:</label>
+                <textarea name="content" id="content" required></textarea>
+                <button type="button" onclick="showNextStep('step-2', 'step-3')">Weiter</button>
             </div>
-            <input type="text" name="title" placeholder="Titel des Artikels" required>
-            <textarea name="content" placeholder="Artikelinhalt" required></textarea>
-            <label for="main_image">Hauptbild:</label>
-            <input type="file" name="main_image" accept="image/*" required>
-            <label for="images">Zusätzliche Bilder:</label>
-            <input type="file" name="images[]" accept="image/*" multiple>
-            <select name="category" required>
-                <option value="">Kategorie wählen</option>
-                <option value="Technology">Technology</option>
-                <option value="Science">Science</option>
-                <option value="Health">Health</option>
-                <!-- Add more categories as needed -->
-            </select>
-            <button type="submit">Artikel speichern</button>
+            <div id="step-3">
+                <label for="main_image">Hauptbild:</label>
+                <input type="file" name="main_image" accept="image/*" required>
+                <button type="button" onclick="showNextStep('step-3', 'step-4')">Weiter</button>
+            </div>
+            <div id="step-4">
+                <label for="images">Zusätzliche Bilder:</label>
+                <input type="file" name="images[]" accept="image/*" multiple>
+                <label for="category">Kategorie:</label>
+                <select name="category" required>
+                    <option value="">Kategorie wählen</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Science">Science</option>
+                    <option value="Health">Health</option>
+                    <!-- Add more categories as needed -->
+                </select>
+                <button type="submit">Artikel speichern</button>
+            </div>
         </form>
     </main>
     <script src="scripts/submit.js"></script>
