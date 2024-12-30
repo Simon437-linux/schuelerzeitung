@@ -9,7 +9,12 @@
     ],
     "date": "2024-12-25 19:45:09",
     "likes": 0,
-    "dislikes": 0,
-    "userInteractions": [],
+    "dislikes": 1,
+    "userInteractions": [
+        {
+            "userId": "127.0.0.1",
+            "type": "dislike"
+        }
+    ],
     "category": "Science"
 }

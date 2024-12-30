@@ -1,68 +1,100 @@
-const form = document.getElementById("article-form");
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('article-form');
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('user_id');
 
-document.addEventListener("DOMContentLoaded", () => {
-    // Überprüfen Sie, ob der Benutzer eingeloggt ist
-    const author = localStorage.getItem('author');
-    const password = localStorage.getItem('password');
-    if (!author || !password || password !== 'Schülerzeitung') {
-        window.location.href = 'login.html';
-        return;
-    }
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    // Initialisieren Sie die Schrittweise Anzeige der Felder
-    document.getElementById('step-2').style.display = 'none';
-    document.getElementById('step-3').style.display = 'none';
-    document.getElementById('step-4').style.display = 'none';
-});
-
-form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-
-    // Get the content from the TinyMCE editor
-    const editor = tinymce.get(tinymce.activeEditor.id);
-    if (editor) {
-        const content = editor.getContent();
-        formData.set('content', content);
-    } else {
-        console.error('TinyMCE editor not found');
-        return;
-    }
-
-    // Set the author and password from local storage
-    const author = localStorage.getItem('author');
-    const password = localStorage.getItem('password');
-    formData.set('author', author);
-    formData.set('password', password);
-
-    try {
-        const response = await fetch("api/save_article.php", {
-            method: "POST",
-            body: formData,
-        });
-
-        const result = await response.json();
-        console.log("Artikel gespeichert:", result);
-
-        if (result.success) {
-            alert("Artikel erfolgreich gespeichert!");
-            form.reset();
-            editor.setContent(''); // Clear the TinyMCE editor
-            // Zurück zum ersten Schritt
-            document.getElementById('step-1').style.display = 'block';
-            document.getElementById('step-2').style.display = 'none';
-            document.getElementById('step-3').style.display = 'none';
-            document.getElementById('step-4').style.display = 'none';
-        } else {
-            alert("Fehler beim Speichern des Artikels: " + result.error);
+        if (!token || !userId) {
+            alert('Kein gültiger Token gefunden. Bitte erneut einloggen.');
+            window.location.href = 'login.html';
+            return;
         }
-    } catch (error) {
-        console.error("Fehler:", error);
-        alert("Ein unerwarteter Fehler ist aufgetreten.");
-    }
-});
 
-function showNextStep(currentStep, nextStep) {
-    document.getElementById(currentStep).style.display = 'none';
-    document.getElementById(nextStep).style.display = 'block';
-}
+        // Token-Validierung
+        fetch('api/verify_token.php', {
+            method: 'GET',
+            headers: {
+                'Authorization': token,
+                'User-ID': userId
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Token validation failed');
+            }
+            return response.text();
+        })
+        .then(() => {
+            // Get TinyMCE content
+            const content = tinymce.get('content').getContent();
+            const formData = new FormData(form);
+            
+            // Explicitly get all form values
+            const title = form.querySelector('#title').value;
+            const category = form.querySelector('select[name="category"]').value;
+            const mainImage = form.querySelector('input[name="main_image"]').files[0];
+            
+            // Log all values before submission
+            console.log('Submitting data:', {
+                title: title,
+                content: content,
+                category: category,
+                mainImage: mainImage ? mainImage.name : 'No image selected',
+                token: token,
+                userId: userId
+            });
+            
+            // Clear and rebuild FormData
+            const newFormData = new FormData();
+            newFormData.append('title', title);
+            newFormData.append('content', content);
+            newFormData.append('category', category);
+            if (mainImage) {
+                newFormData.append('main_image', mainImage);
+            }
+            
+            // Log the final FormData
+            console.log('FormData contents:');
+            for (const [key, value] of newFormData.entries()) {
+                console.log(key, typeof value === 'object' ? 'File: ' + value.name : value);
+            }
+
+            return fetch('api/save_article.php', {
+                method: 'POST',
+                headers: {
+                    'Authorization': token,
+                    'User-ID': userId
+                },
+                body: newFormData
+            });
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log('Raw server response:', data);
+            if (data.includes('Fehler')) {
+                console.error('Server response:', data);
+                alert('Fehler beim Speichern des Artikels: ' + data);
+            } else {
+                alert('Artikel erfolgreich gespeichert.');
+                form.reset();
+                tinymce.get('content').setContent('');
+                // Return to first step
+                document.getElementById('step-1').style.display = 'block';
+                document.getElementById('step-2').style.display = 'none';
+                document.getElementById('step-3').style.display = 'none';
+                document.getElementById('step-4').style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            if (error.message === 'Token validation failed') {
+                alert('Ungültiger Token. Bitte erneut einloggen.');
+                window.location.href = 'login.html';
+            } else {
+                alert('Fehler beim Speichern des Artikels: ' + error.message);
+            }
+        });
+    });
+});

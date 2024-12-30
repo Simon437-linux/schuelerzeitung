@@ -91,12 +91,28 @@
             const author = document.getElementById('author').value;
             const password = document.getElementById('password').value;
 
-            // Speichern Sie die Anmeldeinformationen im lokalen Speicher
-            localStorage.setItem('author', author);
-            localStorage.setItem('password', password);
+            if (password === 'Schülerzeitung') {
+                const token = btoa(author + ':' + password);
 
-            // Weiterleitung zur submit.html-Seite
-            window.location.href = 'submit.html';
+                fetch('api/save_token.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        code: token,
+                        user_id: author // Benutzer-ID wird gesendet
+                    })
+                })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data); // Debugging
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('user_id', author); // Benutzer-ID speichern
+                    window.location.href = 'submit.html';
+                })
+                .catch(error => console.error('Fehler beim Speichern des Tokens:', error));
+            } else {
+                alert('Ungültiges Passwort.');
+            }
         });
     </script>
 </body>

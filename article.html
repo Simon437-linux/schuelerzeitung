@@ -6,6 +6,7 @@
     <title>Artikel ansehen</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.27/dist/fancybox.css">
 </head>
 <body>
     <header>
@@ -13,7 +14,11 @@
     </header>
     <main>
         <div id="article-container" class="article-container"></div>
-        <div id="gallery-container" class="gallery-container"></div>
+        <div id="gallery-container" class="gallery-container">
+            <div class="carousel" data-fancybox="gallery">
+                <!-- Bilder werden dynamisch eingefügt -->
+            </div>
+        </div>
         <form onsubmit="saveComment(event)" class="comment-form">
             <label for="name">Name:</label>
             <input class="name" type="text" name="name" id="name" required>
@@ -24,10 +29,10 @@
         </form>
         
         <ul id="comments-list"></ul>
-
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.27/dist/fancybox.umd.js"></script>
     <script src="scripts/article.js"></script>
     <script src="scripts/comments.js"></script>
 </body>

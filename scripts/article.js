@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 galleryContainer.innerHTML = `
                     <h2>Galerie</h2>
                     <div class="gallery">
-                        ${article.images.map(image => `<a href="articles/${image}" data-fancybox="gallery" data-caption="${article.title}"><img src="articles/${image}" alt="Bild"></a>`).join('')}
+                        ${article.images.map(image => `<a href="articles/${image}" data-fancybox="gallery" data-caption="${article.title}"><img src="articles/${image}" alt="${article.title}"></a>`).join('')}
                     </div>
                 `;
 
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     loop: true,
                     protect: true,
                     thumbs: {
-                        autoStart: true
+                        autoStart: false
                     }
                 });
             }
@@ -71,6 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function updateArticleLike(type) {
     const articleId = new URLSearchParams(window.location.search).get("id");
+    const articleContainer = document.getElementById("article-container");
+    const galleryContainer = document.getElementById("gallery-container");
 
     const response = await fetch(`api/update_article_like.php?article_id=${articleId}`, {
         method: 'POST',
@@ -82,7 +84,6 @@ async function updateArticleLike(type) {
 
     if (result.success) {
         // Reload the article to update the like/dislike counts
-        const articleContainer = document.getElementById("article-container");
         fetch(`api/load_article.php?id=${articleId}`)
             .then(response => response.json())
             .then(article => {
@@ -111,7 +112,7 @@ async function updateArticleLike(type) {
                     galleryContainer.innerHTML = `
                         <h2>Galerie</h2>
                         <div class="gallery">
-                            ${article.images.map(image => `<a href="articles/${image}" data-fancybox="gallery" data-caption="${article.title}"><img src="articles/${image}" alt="Bild"></a>`).join('')}
+                            ${article.images.map(image => `<a href="articles/${image}" data-fancybox="gallery" data-caption="${article.title}"><img src="articles/${image}" alt="${article.title}"></a>`).join('')}
                         </div>
                     `;
 
@@ -128,10 +129,13 @@ async function updateArticleLike(type) {
                         loop: true,
                         protect: true,
                         thumbs: {
-                            autoStart: true
+                            autoStart: false
                         }
                     });
                 }
+
+                // Load comments after the article is loaded
+                loadComments();
             })
             .catch(error => {
                 articleContainer.innerHTML = `<p>Fehler beim Laden des Artikels: ${error.message}</p>`;

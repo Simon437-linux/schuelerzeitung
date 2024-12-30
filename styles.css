@@ -585,6 +585,86 @@ header {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+#step-1, #step-3 {
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  margin-left: 500px;
+  margin-right: 500px;
+  background-color: #ffffff10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#step-1, #step-2, #step-3 {
+  font-size: x-large;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#title {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  padding: 10px;
+  padding-left: 30%;
+  padding-right: 30%;
+  background-color: #161616;
+  transition: 0.3s linear;
+  color: #fff;
+}
+
+#title:hover {
+  background-color: #ffffff1a;
+  color: #ffffff;
+  transition: 0.3s linear;
+}
+
+.submit_header {
+  font-family: Courier, monospace;
+  font-size: xxx-large;
+  color: #ddd;
+  transition: 0.3s linear;
+}
+
+.submit_header:hover {
+  color: #fff;
+  transition: 0.3s linear;
+}
+
+#step-2 {
+  padding: 10px;
+  margin: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: rgba(245, 245, 245, 0.062);
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+.submit_button {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background-color: #000000;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  border: 1px solid white;
+  transition: 0.3s linear;
+}
+
+.submit_button:hover {
+  background-color: #ffffff;
+  color: #000000;
+  transition: 0.3s linear;
+}
+
 @media (max-width: 600px) {
   .gallery img {
     width: 50px;

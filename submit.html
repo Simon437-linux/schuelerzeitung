@@ -8,11 +8,8 @@
     <script src="https://cdn.tiny.cloud/1/lyeu8216j58bfcg4vu4t6d48ev74csdvss7z2qcug46vrves/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const author = localStorage.getItem('author');
-            const password = localStorage.getItem('password');
-
-            // Überprüfen Sie die Anmeldeinformationen
-            if (!author || !password || password !== 'Schülerzeitung') {
+            const token = localStorage.getItem('token');
+            if (!token) {
                 window.location.href = 'login.html';
                 return;
             }
@@ -30,12 +27,13 @@
                 mergetags_list: [
                     { value: 'First.Name', title: 'First Name' },
                     { value: 'Email', title: 'Email' },
-                ]
+                ],
+                setup: function (editor) {
+                    editor.on('init', function () {
+                        editor.setContent('');
+                    });
+                }
             });
-
-            // Verstecken Sie die Felder für den Namen und das Passwort
-            document.getElementById('author-field').style.display = 'none';
-            document.getElementById('password-field').style.display = 'none';
 
             // Initialisieren Sie die Schrittweise Anzeige der Felder
             document.getElementById('step-2').style.display = 'none';
@@ -51,24 +49,24 @@
 </head>
 <body>
     <header>
-        <h1>Artikel erstellen</h1>
+        <h1 class="submit_header">Artikel erstellen</h1>
     </header>
     <main>
         <form id="article-form" enctype="multipart/form-data">
             <div id="step-1">
                 <label for="title">Titel des Artikels:</label>
                 <input type="text" name="title" id="title" required>
-                <button type="button" onclick="showNextStep('step-1', 'step-2')">Weiter</button>
+                <button class="submit_button" type="button" onclick="showNextStep('step-1', 'step-2')">Weiter</button>
             </div>
             <div id="step-2">
                 <label for="content">Inhalt des Artikels:</label>
-                <textarea name="content" id="content" required></textarea>
-                <button type="button" onclick="showNextStep('step-2', 'step-3')">Weiter</button>
+                <textarea class="text" name="content" id="content" required></textarea>
+                <button class="submit_button" type="button" onclick="showNextStep('step-2', 'step-3')">Weiter</button>
             </div>
             <div id="step-3">
                 <label for="main_image">Hauptbild:</label>
                 <input type="file" name="main_image" accept="image/*" required>
-                <button type="button" onclick="showNextStep('step-3', 'step-4')">Weiter</button>
+                <button class="submit_button" type="button" onclick="showNextStep('step-3', 'step-4')">Weiter</button>
             </div>
             <div id="step-4">
                 <label for="images">Zusätzliche Bilder:</label>
@@ -81,10 +79,41 @@
                     <option value="Health">Health</option>
                     <!-- Add more categories as needed -->
                 </select>
-                <button type="submit">Artikel speichern</button>
+                <button class="submit_button" type="submit">Artikel speichern</button>
             </div>
         </form>
     </main>
     <script src="scripts/submit.js"></script>
+    <script>
+        function saveArticle() {
+        const formData = new FormData(document.getElementById('article-form'));
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('user_id');
+
+        fetch('api/save_article.php', {
+            method: 'POST',
+            headers: {
+                'Authorization': token,
+                'User-ID': userId
+            },
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data.includes('Fehler')) {
+                console.error(data);
+                alert('Fehler beim Speichern des Artikels.');
+            } else {
+                alert('Artikel erfolgreich gespeichert.');
+                console.log(data);
+                document.getElementById('article-form').reset(); // Formular zurücksetzen
+            }
+        })
+        .catch(error => {
+            console.error('Fehler beim Speichern des Artikels:', error);
+            alert('Fehler beim Speichern des Artikels.');
+        });
+    }
+    </script>
 </body>
 </html>
