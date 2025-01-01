@@ -2,9 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Prüfen, ob die Seite das erste Mal besucht wird
     if (!sessionStorage.getItem('initialPageLoad')) {
         sessionStorage.setItem('initialPageLoad', 'true');
-        location.reload(); // Seite neu laden
+        setTimeout(function() {
+            location.reload(); // Seite nach 2 Sekunden neu laden
+        }, 2000);
         return;
     }
+});
 
     const form = document.getElementById('article-form');
     const token = localStorage.getItem('token');
@@ -58,4 +61,3 @@ document.addEventListener('DOMContentLoaded', function () {
             alert('Fehler beim Speichern des Artikels: ' + error.message);
         });
     });
-});
