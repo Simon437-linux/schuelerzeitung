@@ -1,4 +1,11 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    // Prüfen, ob die Seite das erste Mal besucht wird
+    if (!sessionStorage.getItem('initialPageLoad')) {
+        sessionStorage.setItem('initialPageLoad', 'true');
+        location.reload(); // Seite neu laden
+        return;
+    }
+
     const form = document.getElementById('article-form');
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('user_id');
