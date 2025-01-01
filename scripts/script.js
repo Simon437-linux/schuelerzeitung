@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Überprüfen Sie, ob der Benutzer eingeloggt ist
-    const author = localStorage.getItem('author');
-    const password = localStorage.getItem('password');
-    if (!author || !password || password !== 'Schülerzeitung') {
-        window.location.href = 'login.html';
-        return;
+    // Authentifizierungsprüfung nur für submit.html
+    if (window.location.pathname.endsWith("submit.html")) {
+        const author = localStorage.getItem('author');
+        const password = localStorage.getItem('password');
+        if (!author || !password || password !== 'Schülerzeitung') {
+            window.location.href = 'login.html';
+            return;
+        }
     }
 
     // Referenzen auf wichtige DOM-Elemente
@@ -38,24 +40,30 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     // Suchleiste: Filterung bei Benutzereingabe
-    searchBar.addEventListener("input", () => {
-        const query = searchBar.value.toLowerCase();
-        filterAndDisplayArticles(query, "");
-    });
+    if (searchBar) {
+        searchBar.addEventListener("input", () => {
+            const query = searchBar.value.toLowerCase();
+            filterAndDisplayArticles(query, "");
+        });
+    }
 
     // Kategorienmenü: Filterung bei Klick auf eine Kategorie
-    categoryMenu.addEventListener("click", (event) => {
-        if (event.target.tagName === "A") {
-            event.preventDefault();
-            const category = event.target.getAttribute("data-category").toLowerCase();
-            filterAndDisplayArticles("", category);
-        }
-    });
+    if (categoryMenu) {
+        categoryMenu.addEventListener("click", (event) => {
+            if (event.target.tagName === "A") {
+                event.preventDefault();
+                const category = event.target.getAttribute("data-category").toLowerCase();
+                filterAndDisplayArticles("", category);
+            }
+        });
+    }
 
     // Menü-Button: Ein-/Ausblenden des Menüs
-    menuToggle.addEventListener("click", () => {
-        categoryMenu.classList.toggle("hidden");
-    });
+    if (menuToggle) {
+        menuToggle.addEventListener("click", () => {
+            categoryMenu.classList.toggle("hidden");
+        });
+    }
 
     /**
      * Filter- und Anzeige-Funktion

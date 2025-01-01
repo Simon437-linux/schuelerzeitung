@@ -45,6 +45,14 @@
             document.getElementById(currentStep).style.display = 'none';
             document.getElementById(nextStep).style.display = 'block';
         }
+        //überprüfen ob die die seite schon neu geladen wurde
+        if (!sessionStorage.getItem('submitPageLoaded')) {
+            // wen nicht dasnn neuladen
+            sessionStorage.setItem('submitPageLoaded', 'true');
+            location.reload();
+        } else {
+            sessionStorage.removeItem('submitPageLoaded');
+        }
     </script>
 </head>
 <body>
