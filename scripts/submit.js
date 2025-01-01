@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('article-form');
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('user_id');
+    const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -12,89 +13,42 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Token-Validierung
-        fetch('api/verify_token.php', {
-            method: 'GET',
+        document.querySelector('input[name="main_image"]').addEventListener('change', function(event) {
+            if (event.target.files[0] && event.target.files[0].size > MAX_FILE_SIZE) {
+                alert("Die Datei ist zu groß. Maximale Größe: 50 MB");
+                event.target.value = ''; // Datei-Auswahl zurücksetzen
+            }
+        });
+
+        const formData = new FormData(form);
+        formData.append('content', tinymce.get('content').getContent());
+
+        fetch('api/save_article.php', {
+            method: 'POST',
             headers: {
                 'Authorization': token,
                 'User-ID': userId
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Token validation failed');
-            }
-            return response.text();
-        })
-        .then(() => {
-            // Get TinyMCE content
-            const content = tinymce.get('content').getContent();
-            const formData = new FormData(form);
-            
-            // Explicitly get all form values
-            const title = form.querySelector('#title').value;
-            const category = form.querySelector('select[name="category"]').value;
-            const mainImage = form.querySelector('input[name="main_image"]').files[0];
-            
-            // Log all values before submission
-            console.log('Submitting data:', {
-                title: title,
-                content: content,
-                category: category,
-                mainImage: mainImage ? mainImage.name : 'No image selected',
-                token: token,
-                userId: userId
-            });
-            
-            // Clear and rebuild FormData
-            const newFormData = new FormData();
-            newFormData.append('title', title);
-            newFormData.append('content', content);
-            newFormData.append('category', category);
-            if (mainImage) {
-                newFormData.append('main_image', mainImage);
-            }
-            
-            // Log the final FormData
-            console.log('FormData contents:');
-            for (const [key, value] of newFormData.entries()) {
-                console.log(key, typeof value === 'object' ? 'File: ' + value.name : value);
-            }
-
-            return fetch('api/save_article.php', {
-                method: 'POST',
-                headers: {
-                    'Authorization': token,
-                    'User-ID': userId
-                },
-                body: newFormData
-            });
+            },
+            body: formData
         })
         .then(response => response.text())
         .then(data => {
-            console.log('Raw server response:', data);
-            if (data.includes('Fehler')) {
-                console.error('Server response:', data);
-                alert('Fehler beim Speichern des Artikels: ' + data);
-            } else {
+            console.log('Server response:', data);
+            try {
+                const jsonData = JSON.parse(data);
+                if (jsonData.error) {
+                    throw new Error(jsonData.error);
+                }
                 alert('Artikel erfolgreich gespeichert.');
                 form.reset();
                 tinymce.get('content').setContent('');
-                // Return to first step
-                document.getElementById('step-1').style.display = 'block';
-                document.getElementById('step-2').style.display = 'none';
-                document.getElementById('step-3').style.display = 'none';
-                document.getElementById('step-4').style.display = 'none';
+            } catch (error) {
+                throw new Error('Unerwartete Serverantwort: ' + data);
             }
         })
         .catch(error => {
-            console.error('Error:', error);
-            if (error.message === 'Token validation failed') {
-                alert('Ungültiger Token. Bitte erneut einloggen.');
-                window.location.href = 'login.html';
-            } else {
-                alert('Fehler beim Speichern des Artikels: ' + error.message);
-            }
+            console.error('Fehler:', error);
+            alert('Fehler beim Speichern des Artikels: ' + error.message);
         });
     });
 });

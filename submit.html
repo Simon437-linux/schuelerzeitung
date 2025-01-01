@@ -52,36 +52,36 @@
         <h1 class="submit_header">Artikel erstellen</h1>
     </header>
     <main>
-        <form id="article-form" enctype="multipart/form-data">
-            <div id="step-1">
-                <label for="title">Titel des Artikels:</label>
-                <input type="text" name="title" id="title" required>
-                <button class="submit_button" type="button" onclick="showNextStep('step-1', 'step-2')">Weiter</button>
-            </div>
-            <div id="step-2">
-                <label for="content">Inhalt des Artikels:</label>
-                <textarea class="text" name="content" id="content" required></textarea>
-                <button class="submit_button" type="button" onclick="showNextStep('step-2', 'step-3')">Weiter</button>
-            </div>
-            <div id="step-3">
-                <label for="main_image">Hauptbild:</label>
-                <input type="file" name="main_image" accept="image/*" required>
-                <button class="submit_button" type="button" onclick="showNextStep('step-3', 'step-4')">Weiter</button>
-            </div>
-            <div id="step-4">
-                <label for="images">Zusätzliche Bilder:</label>
-                <input type="file" name="images[]" accept="image/*" multiple>
-                <label for="category">Kategorie:</label>
-                <select name="category" required>
-                    <option value="">Kategorie wählen</option>
-                    <option value="Technology">Technology</option>
-                    <option value="Science">Science</option>
-                    <option value="Health">Health</option>
-                    <!-- Add more categories as needed -->
-                </select>
-                <button class="submit_button" type="submit">Artikel speichern</button>
-            </div>
-        </form>
+    <form id="article-form" enctype="multipart/form-data">
+        <div id="step-1">
+            <label for="title">Titel des Artikels:</label>
+            <input type="text" name="title" id="title" required>
+            <button class="submit_button" type="button" onclick="showNextStep('step-1', 'step-2')">Weiter</button>
+        </div>
+        <div id="step-2">
+            <label for="content">Inhalt des Artikels:</label>
+            <textarea class="text" name="content" id="content" required></textarea>
+            <button class="submit_button" type="button" onclick="showNextStep('step-2', 'step-3')">Weiter</button>
+        </div>
+        <div id="step-3">
+            <label for="main_image">Hauptbild:</label>
+            <input type="file" name="main_image" accept="image/*" required>
+            <button class="submit_button" type="button" onclick="showNextStep('step-3', 'step-4')">Weiter</button>
+        </div>
+        <div id="step-4">
+            <label for="images">Zusätzliche Bilder:</label>
+            <input type="file" name="images[]" accept="image/*" multiple>
+            <label for="category">Kategorie:</label>
+            <select name="category" required>
+                <option value="">Kategorie wählen</option>
+                <option value="Technology">Technology</option>
+                <option value="Science">Science</option>
+                <option value="Health">Health</option>
+                <!-- Add more categories as needed -->
+            </select>
+            <button class="submit_button" type="submit">Artikel speichern</button>
+        </div>
+    </form>
     </main>
     <script src="scripts/submit.js"></script>
     <script>

@@ -152,6 +152,13 @@ function loadComments() {
     fetch(`api/load_comments.php?article_id=${articleId}`)
         .then(response => response.json())
         .then(comments => {
+            // Sortiere Kommentare nach Datum in absteigender Reihenfolge (neueste zuerst)
+            comments.sort((a, b) => {
+                const dateA = parseDate(a.date);
+                const dateB = parseDate(b.date);
+                return dateB - dateA;
+            });
+
             commentsContainer.innerHTML = comments.map(comment => `
                 <div class="comment">
                     <p class="comment-author">${comment.author}</p>
@@ -167,6 +174,31 @@ function loadComments() {
         .catch(error => {
             commentsContainer.innerHTML = `<p>Fehler beim Laden der Kommentare: ${error.message}</p>`;
         });
+}
+
+function parseDate(dateString) {
+    console.log("Parsing date:", dateString);
+    const formats = [
+        // DD.MM.YYYY
+        /(\d{2})\.(\d{2})\.(\d{4})/,
+        // YYYY-MM-DD
+        /(\d{4})-(\d{2})-(\d{2})/,
+        // MM/DD/YYYY
+        /(\d{2})\/(\d{2})\/(\d{4})/
+    ];
+
+    for (let format of formats) {
+        const match = dateString.match(format);
+        if (match) {
+            const [_, year, month, day] = match[1].length === 4 
+                ? [null, match[1], match[2], match[3]]
+                : [null, match[3], match[2], match[1]];
+            return new Date(year, month - 1, day).getTime();
+        }
+    }
+
+    // Fallback: Versuche, das Datum direkt zu parsen
+    return new Date(dateString).getTime();
 }
 
 async function updateCommentLike(commentId, type) {
