@@ -473,6 +473,8 @@ header {
   font-size: 1.5em;
   cursor: pointer;
   margin-right: 5px;
+  padding: 10px;
+  padding-bottom: 30px;
 }
 
 .dislike, .like {
@@ -609,8 +611,7 @@ header {
   border: 1px solid #ffffff;
   border-radius: 5px;
   padding: 10px;
-  padding-left: 30%;
-  padding-right: 30%;
+  padding-right: 60%;
   background-color: #161616;
   transition: 0.3s linear;
   color: #fff;
@@ -663,6 +664,19 @@ header {
   background-color: #ffffff;
   color: #000000;
   transition: 0.3s linear;
+}
+
+.back-link {
+  color: white;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: #ddd;
+  text-decoration: underline;
+  transition: all 0.3s ease-in-out;
 }
 
 @media (max-width: 600px) {

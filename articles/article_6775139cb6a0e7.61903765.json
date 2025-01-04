@@ -13,8 +13,13 @@
         "article_6775139cb6a0e7.61903765_6775139cbcb4d.jpg"
     ],
     "date": "2025-01-01 11:06:20",
-    "likes": 0,
+    "likes": 1,
     "dislikes": 0,
-    "userInteractions": [],
+    "userInteractions": [
+        {
+            "userId": "127.0.0.1",
+            "type": "like"
+        }
+    ],
     "category": "Technology"
 }

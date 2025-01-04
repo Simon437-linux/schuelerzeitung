@@ -7,6 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    loadArticle();
+});
+
+function loadArticle() {
     const articleId = new URLSearchParams(window.location.search).get("id");
     const articleContainer = document.getElementById("article-container");
     const galleryContainer = document.getElementById("gallery-container");
@@ -24,12 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p class="article-meta"><strong>Von:</strong> ${article.author} | <strong>Veröffentlicht am:</strong> ${article.date}</p>
                 <img src="articles/${article.image}" alt="${article.title}" class="main-article-image">
                 <p>${article.content}</p>
-                <button class="like-button" onclick="updateArticleLike('like')">👍</button>
-                <span id="article-likes">${article.likes || 0}</span>
-                <button class="dislike-button" onclick="updateArticleLike('dislike')">👎</button>
-                <span id="article-dislikes">${article.dislikes || 0}</span>
                 <div class="comments-section">
-                    <h2>Kommentare</h2>
                     <div id="comments-container"></div>
                 </div>
             `;
@@ -37,10 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
             // Galerie anzeigen
             if (article.images && article.images.length > 0) {
                 galleryContainer.innerHTML = `
-                    <h2>Galerie</h2>
                     <div class="gallery">
                         ${article.images.map(image => `<a href="articles/${image}" data-fancybox="gallery" data-caption="${article.title}"><img src="articles/${image}" alt="${article.title}"></a>`).join('')}
                     </div>
+                    <button class="like-button" onclick="updateArticleLike('like')">👍</button>
+                    <span id="article-likes">${article.likes || 0}</span>
+                    <button class="dislike-button" onclick="updateArticleLike('dislike')">👎</button>
+                    <span id="article-dislikes">${article.dislikes || 0}</span>
                 `;
 
                 // Initialize Fancybox
@@ -67,12 +69,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .catch(error => {
             articleContainer.innerHTML = `<p>Fehler beim Laden des Artikels: ${error.message}</p>`;
         });
-});
+}
 
 async function updateArticleLike(type) {
     const articleId = new URLSearchParams(window.location.search).get("id");
-    const articleContainer = document.getElementById("article-container");
-    const galleryContainer = document.getElementById("gallery-container");
 
     const response = await fetch(`api/update_article_like.php?article_id=${articleId}`, {
         method: 'POST',
@@ -88,57 +88,16 @@ async function updateArticleLike(type) {
             .then(response => response.json())
             .then(article => {
                 if (article.error) {
-                    articleContainer.innerHTML = `<p>${article.error}</p>`;
+                    console.error(article.error);
                     return;
                 }
 
-                articleContainer.innerHTML = `
-                    <h1>${article.title}</h1>
-                    <p class="article-meta"><strong>Von:</strong> ${article.author} | <strong>Veröffentlicht am:</strong> ${article.date}</p>
-                    <img src="articles/${article.image}" alt="${article.title}" class="main-article-image">
-                    <p>${article.content}</p>
-                    <button class="like-button" onclick="updateArticleLike('like')">👍</button>
-                    <span id="article-likes">${article.likes || 0}</span>
-                    <button class="dislike-button" onclick="updateArticleLike('dislike')">👎</button>
-                    <span id="article-dislikes">${article.dislikes || 0}</span>
-                    <div class="comments-section">
-                        <h2>Kommentare</h2>
-                        <div id="comments-container"></div>
-                    </div>
-                `;
-
-                // Galerie anzeigen
-                if (article.images && article.images.length > 0) {
-                    galleryContainer.innerHTML = `
-                        <h2>Galerie</h2>
-                        <div class="gallery">
-                            ${article.images.map(image => `<a href="articles/${image}" data-fancybox="gallery" data-caption="${article.title}"><img src="articles/${image}" alt="${article.title}"></a>`).join('')}
-                        </div>
-                    `;
-
-                    // Initialize Fancybox
-                    $('[data-fancybox="gallery"]').fancybox({
-                        buttons: [
-                            "slideShow",
-                            "thumbs",
-                            "zoom",
-                            "fullScreen",
-                            "share",
-                            "close"
-                        ],
-                        loop: true,
-                        protect: true,
-                        thumbs: {
-                            autoStart: false
-                        }
-                    });
-                }
-
-                // Load comments after the article is loaded
-                loadComments();
+                // Update only the like/dislike counts
+                document.getElementById("article-likes").textContent = article.likes || 0;
+                document.getElementById("article-dislikes").textContent = article.dislikes || 0;
             })
             .catch(error => {
-                articleContainer.innerHTML = `<p>Fehler beim Laden des Artikels: ${error.message}</p>`;
+                console.error('Fehler beim Aktualisieren der Likes/Dislikes:', error.message);
             });
     } else {
         alert('Fehler beim Aktualisieren: ' + result.message);
@@ -202,6 +161,7 @@ function parseDate(dateString) {
 }
 
 async function updateCommentLike(commentId, type) {
+    const articleId = new URLSearchParams(window.location.search).get("id");
     const response = await fetch(`api/update_like.php?article_id=${articleId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
