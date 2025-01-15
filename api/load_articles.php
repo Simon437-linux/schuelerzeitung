@@ -20,10 +20,13 @@ if (is_dir($articlesDir)) {
             $articles[] = $article;
         }
     }
+    
+    // Sort articles by date, newest first
+    usort($articles, function($a, $b) {
+        return strtotime($b['date']) - strtotime($a['date']);
+    });
+
+    echo json_encode($articles, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 } else {
     echo json_encode(['error' => 'Articles directory not found.']);
-    exit;
 }
-
-// Bereinigte Ausgabe
-echo json_encode($articles, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
