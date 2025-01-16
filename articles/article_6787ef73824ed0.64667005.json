@@ -11,8 +11,13 @@
         "article_6787ef73824ed0.64667005_6787ef7383736.png"
     ],
     "date": "2025-01-15 18:25:07",
-    "likes": 0,
+    "likes": 1,
     "dislikes": 0,
-    "userInteractions": [],
+    "userInteractions": [
+        {
+            "userId": "127.0.0.1",
+            "type": "like"
+        }
+    ],
     "category": "Wissenschaft"
 }

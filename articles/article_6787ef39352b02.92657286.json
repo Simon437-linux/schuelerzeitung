@@ -9,8 +9,13 @@
         "article_6787ef39352b02.92657286_6787ef393ab55.jpg"
     ],
     "date": "2025-01-15 18:24:09",
-    "likes": 0,
+    "likes": 1,
     "dislikes": 0,
-    "userInteractions": [],
+    "userInteractions": [
+        {
+            "userId": "127.0.0.1",
+            "type": "like"
+        }
+    ],
     "category": "ratsch_und_tratsch"
 }
