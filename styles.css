@@ -6,6 +6,9 @@ body {
   font-family: 'Helvetica Neue', Arial, sans-serif;
   background-color: #161616;
   color: #ffffff;
+  margin: 0;
+  padding-right: 10px;
+  padding-left: 10px;
 }
 
 /* Positionierung der Suchleiste und Kategorienleiste im Header */
@@ -135,7 +138,8 @@ header .search-container {
 #articles-container {
   max-width: 1200px;
   margin: auto;
-  background-color: #fff;
+  padding: 10px;
+  background-color: #161616;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -150,11 +154,6 @@ header .search-container {
   margin-bottom: 25px;
 }
 
-.latest-article-content {
-  padding: 10px;
-  width: 50%;
-}
-
 .latest-article-content h1 {
   margin-top: 0;
   font-size: 2em;
@@ -178,51 +177,17 @@ header .search-container {
   border: 1px solid white;
   transition: 0.3s linear;
 }
-/* Google Fonts einbinden */
-@import url('https://fonts.googleapis.com/css2?family=Gloock&display=swap');
 
-/* Allgemeine Stile */
-body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  margin: 0;
-  background-color: #161616;
-  color: #ffffff;
-}
-
-header {
-  color: #ffffff;
-  padding: 10px 0;
-  text-align: center;
-  font-family: Gloock, serif;
-  font-size: x-large;
+.latest-article-content a:hover {
+  background-color: #ffffff;
+  color: #000000;
+  transition: 0.3s linear;
 }
 
 .latest-article-content {
   padding: 50px;
   width: 400%;
-}
-/* Google Fonts einbinden */
-@import url('https://fonts.googleapis.com/css2?family=Gloock&display=swap');
-
-/* Allgemeine Stile */
-body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  margin: 0;
-  background-color: #161616;
-  color: #ffffff;
-}
-
-header {
-  color: #ffffff;
-  padding: 10px 0;
-  text-align: center;
-  font-family: Gloock, serif;
-  font-size: x-large;
-}
-
-#articles-container {
-  padding: 10px;
-  background-color: #161616;
+  padding-top: 0;
 }
 
 .latest-article-image img {#category-filter {
@@ -234,74 +199,10 @@ header {
   padding-bottom: 0;
 }
 
-.latest-article-content {
-  padding-top: 0;
-  width: 400%;
-}
-
-.latest-article-content h1 {
-  margin-top: 0;
-  font-size: 2em;
-  color: #ffffff;
-  font-family: 'Gloock', serif;
-}
-
-.latest-article-content p {
-  margin: 10px 0;
-  line-height: 1.6;
-}
-
-.latest-article-content a {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 10px;
-  background-color: #000000;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  border: 1px solid white;
-  transition: 0.3s linear;
-}
-
-.latest-article-content a:hover {
-  background-color: #ffffff;
-  color: #000000;
-  transition: 0.3s linear;
-}
-
 .clearfix::after {
   content: "";
   clear: both;
   display: table;
-}
-.latest-article-content h1 {
-  margin-top: 0;
-  font-size: 2em;
-  color: #ffffff;
-  font-family: 'Gloock', serif;
-}
-
-.latest-article-content p {
-  margin: 10px 0;
-  line-height: 1.6;
-}
-
-.latest-article-content a {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 10px 10px;
-  background-color: #000000;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  border: 1px solid white;
-  transition: 0.3s linear;
-}
-
-.latest-article-content a:hover {
-  background-color: #ffffff;
-  color: #000000;
-  transition: 0.3s linear;  background-color: #0056b3;
 }
 
 /* Stile für ältere Artikel */
@@ -364,16 +265,15 @@ header {
   clear: both;
   display: table;
 }
-.latest-article-content a:hover {
-  background-color: #ffffff;
-  color: #000000;
-  transition: 0.3s linear;
-}
 
 .article {
   padding: 10%;
   padding-top: 0;
   padding-bottom: 20px;
+}
+.gallery img:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 #article-container .article-image img {
@@ -417,11 +317,6 @@ header {
 .comment-author {
   font-weight: bold;
   margin-bottom: 5px;
-}
-
-.comment-date {
-  font-size: 0.8em;
-  color: #999;
 }
 
 .comment-content {
@@ -517,20 +412,6 @@ header {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-}
-
-.gallery img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.gallery img:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .gallery img {
@@ -713,12 +594,6 @@ header {
 
   .gallery img {
     margin-bottom: 10px;
-  }
-
-  body {
-    margin: 0;
-    padding-right: 10px;
-    padding-left: 10px;
   }
 
   #menu-toggle {

@@ -13,7 +13,7 @@
             <nav id="category-menu" class="hidden">
                 <input type="text" id="search-bar" placeholder="Artikel suchen...">
                 <ul>
-                    <li><a href="#" data-category="">Alle alten Artikel</a></li>
+                    <li><a href="index.html" data-category="">Alle alten Artikel</a></li>
                     <li><a href="#" data-category="über_uns">über uns</a></li>
                     <li><a href="#" data-category="Sonderausgaben">Sonderausgaben</a></li>
                     <li><a href="#" data-category="interviews">interviews</a></li>
@@ -31,10 +31,6 @@
     </header>
 
     <body>
-        <header>
-            <!-- ... existing header content ... -->
-        </header>
-    
         <div class="main-content">
             <div id="articles-container">
                 <!-- Neuester Artikel -->
@@ -52,11 +48,11 @@
                     <ul id="popular-articles-list"></ul>
                 </div>
                 <br>
+                <!-- Wetter mit wetteronline.de -->
                 <h3>Das Wetter</h3>
                 <iframe width='300' height='100' name='CW1' style='border:1px solid;border-radius:10px;border-color:transparent;' src='https://api.wetteronline.de/wetterwidget?gid=10382&modeid=CW1&seourl=weiheim&locationname=weilheim&lang=de'></iframe>
             </aside>
         </div>
-        
         <script src="scripts/script.js"></script>
         <script src="scripts/load-articles.js"></script>
     </body>
