@@ -451,7 +451,6 @@ header {
 .comment-date {
   font-size: 0.8em;
   color: #999;
-  margin-bottom: 10px;
 }
 
 .comment-content {
@@ -474,7 +473,6 @@ header {
   border-radius: 3px;
   border: 0 solid #161616;
   margin-bottom: 15px;
-  margin-top: 5px;
   margin-left: 5px;
 }
 

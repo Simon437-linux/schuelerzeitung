@@ -28,6 +28,10 @@ function loadArticle() {
                 <p class="article-meta"><strong>Von:</strong> ${article.author} | <strong>Veröffentlicht am:</strong> ${article.date}</p>
                 <img src="articles/${article.image}" alt="${article.title}" class="main-article-image">
                 <p>${article.content}</p>
+                <button class="like-button" onclick="updateArticleLike('like')">👍</button>
+                <span id="article-likes">${article.likes || 0}</span>
+                <button class="dislike-button" onclick="updateArticleLike('dislike')">👎</button>
+                <span id="article-dislikes">${article.dislikes || 0}</span>
                 <div class="comments-section">
                     <div id="comments-container"></div>
                 </div>
@@ -39,10 +43,6 @@ function loadArticle() {
                     <div class="gallery">
                         ${article.images.map(image => `<a href="articles/${image}" data-fancybox="gallery" data-caption="${article.title}"><img src="articles/${image}" alt="${article.title}"></a>`).join('')}
                     </div>
-                    <button class="like-button" onclick="updateArticleLike('like')">👍</button>
-                    <span id="article-likes">${article.likes || 0}</span>
-                    <button class="dislike-button" onclick="updateArticleLike('dislike')">👎</button>
-                    <span id="article-dislikes">${article.dislikes || 0}</span>
                 `;
 
                 // Initialize Fancybox
