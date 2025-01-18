@@ -30,17 +30,34 @@
         </div>
     </header>
 
-    <div id="articles-container">
-        <!-- Neuester Artikel -->
-        <div class="latest-article">
+    <body>
+        <header>
+            <!-- ... existing header content ... -->
+        </header>
+    
+        <div class="main-content">
+            <div id="articles-container">
+                <!-- Neuester Artikel -->
+                <div class="latest-article">
+                </div>
+                <hr>
+                <!-- Ältere Artikel -->
+                <div class="older-articles">
+                </div>
+            </div>
+
+            <aside class="sidebar">
+                <div class="popular-articles">
+                    <h3>Beliebteste Artikel</h3>
+                    <ul id="popular-articles-list"></ul>
+                </div>
+                <br>
+                <h3>Das Wetter</h3>
+                <iframe width='300' height='100' name='CW1' style='border:1px solid;border-radius:10px;border-color:transparent;' src='https://api.wetteronline.de/wetterwidget?gid=10382&modeid=CW1&seourl=weiheim&locationname=weilheim&lang=de'></iframe>
+            </aside>
         </div>
         
-        <!-- Ältere Artikel -->
-        <div class="older-articles">
-        </div>
-    </div>
-    
-    <script src="scripts/script.js"></script>
-    <script src="scripts/load-articles.js"></script>
-</body>
+        <script src="scripts/script.js"></script>
+        <script src="scripts/load-articles.js"></script>
+    </body>
 </html>

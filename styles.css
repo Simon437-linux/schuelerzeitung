@@ -134,8 +134,7 @@ header .search-container {
 
 #articles-container {
   max-width: 1200px;
-  margin: 50px auto;
-  padding: 20px;
+  margin: auto;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -144,11 +143,12 @@ header .search-container {
 .latest-article {
   display: flex;
   flex-direction: row;
-  margin-bottom: 40px;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 20px;
 }
 
+#articles-container hr {
+  color: white;
+  margin-bottom: 25px;
+}
 
 .latest-article-content {
   padding: 10px;
@@ -197,22 +197,6 @@ header {
   font-size: x-large;
 }
 
-#articles-container {
-  margin: 10px auto;
-  padding: 10%;
-  background-color: #161616;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Stile für den neuesten Artikel */
-.latest-article {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 40px;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 20px;
-}
-
 .latest-article-content {
   padding: 50px;
   width: 400%;
@@ -237,19 +221,8 @@ header {
 }
 
 #articles-container {
-  margin: 10px auto;
   padding: 10px;
   background-color: #161616;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Stile für den neuesten Artikel */
-.latest-article {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 40px;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 20px;
 }
 
 .latest-article-image img {#category-filter {
@@ -385,8 +358,6 @@ header {
   color: #000000;
   transition: 0.3s linear;
 }
-
-/* Suchleiste und Kategorienfilter */
 
 .clearfix::after {
   content: "";
@@ -670,6 +641,62 @@ header {
   color: #ddd;
   text-decoration: underline;
   transition: all 0.3s ease-in-out;
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.sidebar {
+  width: 300px;
+  position: fixed;
+  right: 20px;
+  top: 170px;
+  bottom: 20px;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-family: serif;
+  font-size: x-large;
+}
+
+.sidebar hr {
+  color: white;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 15px;
+}
+
+.sidebar a {
+  color: rgb(201, 201, 201);
+  text-decoration: none;
+  transition: 0.3s linear;
+  line-height: 1.5;
+}
+
+.sidebar a:hover {
+  color: white;
+  transition: 0.3s linear;
+}
+
+.popular_date {
+  color: #999;
 }
 
 @media (max-width: 600px) {

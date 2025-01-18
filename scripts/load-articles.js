@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // ... (previous code remains the same)
-
     // Artikel von der API laden
     fetch("api/load_articles.php")
         .then(response => response.json())
@@ -16,8 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Fehler beim Laden der Artikel:", error);
             articlesContainer.innerHTML = "<p>Fehler beim Laden der Artikel. Bitte versuchen Sie es später erneut.</p>";
         });
-
-    // ... (rest of the code remains the same)
 
     function displayArticles(articlesToDisplay) {
         latestArticleContainer.innerHTML = ""; // Container leeren
@@ -43,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p><strong>Kategorie:</strong> ${latestArticle.category}</p>
                 <p><strong>Likes:</strong> ${latestArticle.likes} | <strong>Kommentare:</strong> ${latestArticle.commentCount}</p>
                 <a href="article.html?id=${latestArticle.id}">Weiterlesen</a>
+                <hr>
             </div>
         `;
 
