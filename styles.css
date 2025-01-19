@@ -149,9 +149,10 @@ header .search-container {
   flex-direction: row;
 }
 
-#articles-container hr {
+body hr {
   color: white;
   margin-bottom: 25px;
+  margin-top: 25px;
 }
 
 .latest-article-content h1 {
@@ -535,19 +536,20 @@ header .search-container {
 .sidebar {
   width: 300px;
   position: fixed;
-  right: 20px;
-  top: 170px;
+  right: 0;
+  top: 130px;
   bottom: 20px;
-  overflow-y: auto;
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 10px 0 0 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border: 1px solid white;
+  border-right: 0;
 }
 
 .sidebar h3 {
   margin-top: 0;
   margin-bottom: 10px;
-  font-family: serif;
+  font-family: system-ui;
   font-size: x-large;
 }
 
