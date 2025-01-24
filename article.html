@@ -10,7 +10,10 @@
 </head>
 <body class="article">
     <header>
-        <a href="index.html" class="back-link">❰❰❰_Zurück_❱❱❱</a>
+        <label class="toggle-switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="toggle-slider"></span>
+          </label>
     </header>
     <main>
         <div id="article-container" class="article-container"></div>
@@ -19,6 +22,7 @@
                 <!-- Bilder werden dynamisch eingefügt -->
             </div>
         </div>
+        <a href="index.html" class="back-link"><h3 class="back-link">❰❰❰_Zurück_❱❱❱</h3></a>
         <form onsubmit="saveComment(event)" class="comment-form">
             <label for="name">Name:</label>
             <input class="name" type="text" name="name" id="name" required>
@@ -35,5 +39,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.27/dist/fancybox.umd.js"></script>
     <script src="scripts/article.js"></script>
     <script src="scripts/comments.js"></script>
+    <script src="scripts/dark-mode.js"></script>
 </body>
 </html>

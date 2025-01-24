@@ -26,16 +26,21 @@
                 </ul>
             </nav>
             <h1>Schülerzeitung</h1>
-            
         </div>
+        <a class="light-mode-toggle">
+        <label class="toggle-switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="toggle-slider"></span>
+          </label>
+        </a>
     </header>
 
     <body>
         <hr>
         <div class="main-content">
-            <div id="articles-container">
+            <div id="articles-container" class="articles-container">
                 <!-- Neuester Artikel -->
-                <div class="latest-article">
+                <div class="latest-article" id="latest-article-div">
                 </div>
                 <!-- Ältere Artikel -->
                 <div class="older-articles">
@@ -55,5 +60,12 @@
         </div>
         <script src="scripts/script.js"></script>
         <script src="scripts/load-articles.js"></script>
+        <script src="scripts/dark-mode.js"></script>
     </body>
+
+    <footer>
+        <div class="footer-container">
+            <p>© 2021 Schülerzeitung</p>
+        </div>
+    </footer>
 </html>
