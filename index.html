@@ -9,33 +9,29 @@
 <body>
     <header>
         <div class="header-container">
-            <button id="menu-toggle">☰</button>
-            <nav id="category-menu" class="hidden">
-                <input type="text" id="search-bar" placeholder="Artikel suchen...">
-                <ul>
-                    <li><a href="index.html" data-category="">Alle alten Artikel</a></li>
-                    <li><a href="#" data-category="über_uns">über uns</a></li>
-                    <li><a href="#" data-category="Sonderausgaben">Sonderausgaben</a></li>
-                    <li><a href="#" data-category="interviews">interviews</a></li>
-                    <li><a href="#" data-category="Wissenschaft">Wissenschaft</a></li>
-                    <li><a href="#" data-category="ratsch_und_tratsch">ratsch_und_tratsch</a></li>
-                    <li><a href="#" data-category="Film_vorstellungen">Film_vorstellungen</a></li>
-                    <li><a href="#" data-category="Bücher_vorstellungen">Bücher_vorstellungen</a></li>
-                    <li><a href="#" data-category="Musik_vorstellungen">Musik_vorstellungen</a></li>
-                    <li><a href="#" data-category="Rezepte">Rezepte</a></li>
-                </ul>
-            </nav>
             <h1>Schülerzeitung</h1>
         </div>
-        <a class="light-mode-toggle">
-        <label class="toggle-switch">
-            <input type="checkbox" id="themeToggle">
-            <span class="toggle-slider"></span>
-          </label>
-        </a>
     </header>
+    <aside class="sidebar-right">
+        <nav id="category-menu">
+            <h3>Suche</h3>
+            <input type="text" id="search-bar" placeholder="Artikel suchen..."><br>
+            <ul>
+                <h3>Kategorien Filter</h3>
+                <li><a href="index.html" data-category="">Alle alten Artikel</a></li><hr>
+                <li><a href="#" data-category="über_uns">über uns</a></li><hr>
+                <li><a href="#" data-category="Sonderausgaben">Sonderausgaben</a></li><hr>
+                <li><a href="#" data-category="interviews">interviews</a></li><hr>
+                <li><a href="#" data-category="Wissenschaft">Wissenschaft</a></li><hr>
+                <li><a href="#" data-category="ratsch_und_tratsch">ratsch_und_tratsch</a></li><hr>
+                <li><a href="#" data-category="Film_vorstellungen">Film_vorstellungen</a></li><hr>
+                <li><a href="#" data-category="Bücher_vorstellungen">Bücher_vorstellungen</a></li><hr>
+                <li><a href="#" data-category="Musik_vorstellungen">Musik_vorstellungen</a></li><hr>
+                <li><a href="#" data-category="Rezepte">Rezepte</a></li>
+            </ul>
+        </nav>
+    </aside>
 
-    <body>
         <hr>
         <div class="main-content">
             <div id="articles-container" class="articles-container">
@@ -58,14 +54,39 @@
                     <iframe width='300' height='100' name='CW1' style='border:1px solid;border-radius:10px;border-color:transparent;' src='https://api.wetteronline.de/wetterwidget?gid=10382&modeid=CW1&seourl=weiheim&locationname=weilheim&lang=de'></iframe>
             </aside>
         </div>
+<hr>
+<footer>
+    <div class="footer-container">
+
+        <ul class="footer-left">
+            <li>
+                <p>Kontakt: </p>
+                <a href="mailto:schuelerzeitung@rswm.de">Schülerzeitung@rswm.de</a>
+            </li>
+        </ul>
+
+        <ul class="footer-right">
+            <li>
+                <p>light-mode: </p>
+                <div class="light-mode-toggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="footer-center">
+            <li>
+                <p>© 2025 Schülerzeitung</p>
+            </li>
+        </ul>
+
+    </div>
+</footer>
         <script src="scripts/script.js"></script>
         <script src="scripts/load-articles.js"></script>
         <script src="scripts/dark-mode.js"></script>
-    </body>
-
-    <footer>
-        <div class="footer-container">
-            <p>© 2021 Schülerzeitung</p>
-        </div>
-    </footer>
+</body>
 </html>

@@ -61,13 +61,6 @@ if (categoryMenu) {
     });
 }
 
-// Menü-Button: Ein-/Ausblenden des Menüs
-if (menuToggle) {
-    menuToggle.addEventListener("click", () => {
-        categoryMenu.classList.toggle("hidden");
-    });
-}
-
 /**
  * Filter- und Anzeige-Funktion
  * @param {string} query Suchanfrage (Text)

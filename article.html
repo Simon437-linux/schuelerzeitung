@@ -9,12 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.27/dist/fancybox.css">
 </head>
 <body class="article">
-    <header>
-        <label class="toggle-switch">
-            <input type="checkbox" id="themeToggle">
-            <span class="toggle-slider"></span>
-          </label>
-    </header>
     <main>
         <div id="article-container" class="article-container"></div>
         <div id="gallery-container" class="gallery-container">
@@ -22,7 +16,7 @@
                 <!-- Bilder werden dynamisch eingefügt -->
             </div>
         </div>
-        <a href="index.html" class="back-link"><h3 class="back-link">❰❰❰_Zurück_❱❱❱</h3></a>
+
         <form onsubmit="saveComment(event)" class="comment-form">
             <label for="name">Name:</label>
             <input class="name" type="text" name="name" id="name" required>
@@ -34,6 +28,12 @@
         
         <ul id="comments-list"></ul>
     </main>
+    <footer>
+        <label class="toggle-switch" id="articleToggle">
+            <input type="checkbox" id="themeToggle">
+            <span class="toggle-slider"></span>
+        </label>
+    </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.27/dist/fancybox.umd.js"></script>

@@ -24,9 +24,13 @@ function loadArticle() {
             }
 
             articleContainer.innerHTML = `
+                <div class="title-container">
                 <h1>${article.title}</h1>
-                <p class="article-meta"><strong>Von:</strong> ${article.author} | <strong>Veröffentlicht am:</strong> ${article.date}</p>
+                <a href="index.html" class="back-link"><h3 class="back-link">ᐊ- Zurück zu den Artikeln</h3></a>
+                </div>
                 <img src="articles/${article.image}" alt="${article.title}" class="main-article-image">
+                <p class="article-category"><strong>Kategorie:</strong> ${article.category}</p>
+                <p class="article-meta"><strong>Von:</strong> ${article.author} | <strong>Veröffentlicht am:</strong> ${article.date}</p><br>
                 <p>${article.content}</p>
                 <button class="like-button" onclick="updateArticleLike('like')">👍</button>
                 <span id="article-likes">${article.likes || 0}</span>
