@@ -266,9 +266,9 @@ body hr {
 .title-container::before {
   content: '';
   position: absolute;
-  width: 80%;
+  width: 100%;
   height: 200%;
-  left: 10%;
+  left: 0%;
   top: 50%;
   border-radius: 50%;
   background-color: blue;
@@ -715,8 +715,12 @@ body.light-mode header h1 {
 body.light-mode .title-container::before {
   background-color: rgb(96, 107, 255);
   filter: blur(20px);
+  
 }
 
+body.light-mode .title-container::after {
+  opacity: 0.2;
+}
 
 body.light-mode header #menu-toggle {
   color: #000000;
@@ -730,8 +734,8 @@ body.light-mode h2 {
   color: #000000;
 }
 
-body.light-mode h1 {
-  color: #000000;
+body.light-mode .title-container h1 {
+  color: #292929;
 }
 
 body.light-mode .older-articles .article {
@@ -1098,6 +1102,43 @@ body.dark-mode .articles-container {
     width: 100%;
     height: auto;
     border-radius: 10px;
+  }
+
+  #title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    padding-right: auto;
+  }
+
+  #step-2, #step-3 {
+    padding: 10px;
+    margin: 10px;
+    margin-left: 1px;
+    margin-right: 1px;
+  }
+
+  #step-1 {
+    padding: 0;
+    margin: 0;
+    margin-left: 0;
+    margin-right: 0;
+    border: none;
+  }
+
+  #step-1, #step-2, #step-3 {
+    -webkit-box-shadow:0px 0px 0px 0px rgba(255,255,255,1);
+    -moz-box-shadow: 0px 0px 0px 0px rgba(255,255,255,1);
+    box-shadow: 0px 0px 0px 0px rgba(255,255,255,1);
+  }
+
+  .submit_header {
+    display: none;
+  }
+
+  body.submit {
+    padding: 0;
+    margin: 0;
   }
 
   #latest-article-div {

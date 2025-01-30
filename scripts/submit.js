@@ -1,11 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Prüfen, ob die Seite das erste Mal besucht wird
-    if (!sessionStorage.getItem('initialPageLoad')) {
-        sessionStorage.setItem('initialPageLoad', 'true');
-        setTimeout(function() {
-            location.reload(); // Seite nach 2 Sekunden neu laden
-        }, 2000);
-        return;
+    // Authentifizierungsprüfung nur für submit.html
+    if (window.location.pathname.endsWith("submit.html")) {
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('user_id');
+        if (!token || !userId) {
+            window.location.href = 'login.html';
+            return;
+        }
     }
 });
 
