@@ -37,11 +37,14 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch('api/save_article.php', {
             method: 'POST',
             headers: {
-                'Authorization': token,
-                'User-ID': userId
+                'Authorization': token || '',
+                'User-ID': userId || ''
             },
             body: formData
-        })
+        }).then(response => response.text())
+        .then(data => console.log("Server Response:", data))
+        .catch(error => console.error("Fetch error:", error));
+        
         .then(response => response.text())
         .then(data => {
             console.log('Server response:', data);
