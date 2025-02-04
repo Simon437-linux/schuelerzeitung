@@ -9,7 +9,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const token = localStorage.getItem('token');
-            if (!token) {
+            const userId = localStorage.getItem('user_id');
+            if (!token || !userId) {
                 window.location.href = 'login.html';
                 return;
             }
@@ -18,7 +19,7 @@
             tinymce.init({
                 selector: 'textarea[name="content"]',
                 plugins: [
-                     'quickbars', 'autolink', 'charmap', 'fullscreen', 'media', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount', 'image', 'accordion', 'autosave', 'code', 'contextmenu', 'directionality', 'emoticons', 'fullpage', 'fullpage', 'help', 'hr', 'image', 'imagetools', 'importcss', 'insertdatetime', 'legacyoutput', 'link', 'lists', 'media', 'noneditable', 'paste', 'preview', 'print', 'save', 'searchreplace', 'spellchecker', 'tabfocus', 'table', 'template', 'textcolor', 'textpattern', 'toc', 'visualblocks', 'visualchars', 'wordcount',
+                    'quickbars', 'autolink', 'charmap', 'fullscreen', 'media', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount', 'image', 'accordion', 'autosave', 'code', 'directionality', 'emoticons', 'help', 'image', 'importcss', 'insertdatetime', 'link', 'lists', 'media', 'preview', 'save', 'searchreplace', 'table', 'visualblocks', 'visualchars', 'wordcount',
                 ],
                 toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align | addcomment showcomments | checklist numlist bullist indent outdent | image | media | emoticons charmap | removeformat | searchreplace | fullscreen',
                 tinycomments_mode: 'embedded',
@@ -33,45 +34,20 @@
                     });
                 }
             });
-
-            // Initialisieren Sie die Schrittweise Anzeige der Felder
-            document.getElementById('step-2').style.display = 'none';
-            document.getElementById('step-3').style.display = 'none';
-            document.getElementById('step-4').style.display = 'none';
         });
-
-        function showNextStep(currentStep, nextStep) {
-            document.getElementById(currentStep).style.display = 'none';
-            document.getElementById(nextStep).style.display = 'block';
-        }
-        //überprüfen ob die die seite schon neu geladen wurde
-        if (!sessionStorage.getItem('submitPageLoaded')) {
-            // wen nicht dasnn neuladen
-            sessionStorage.setItem('submitPageLoaded', 'true');
-            location.reload();
-        } else {
-            sessionStorage.removeItem('submitPageLoaded');
-        }
     </script>
 </head>
 <body class="submit">
     <header>
         <h1 class="submit_header">Artikel erstellen</h1>
     </header>
-    <main>
-    <form id="article-form" enctype="multipart/form-data">
-        <div id="step-1">
+    <main class="submit_main">
+        <form id="article-form" enctype="multipart/form-data">
             <label for="title">Titel des Artikels:</label>
             <input type="text" name="title" id="title" required>
             <textarea class="text" name="content" id="content" required></textarea>
-            <button class="submit_button" type="button" onclick="showNextStep('step-1', 'step-2')">Weiter</button>
-        </div>
-        <div id="step-2">
             <label for="main_image">Hauptbild:</label>
             <input type="file" name="main_image" accept="image/*" required>
-            <button class="submit_button" type="button" onclick="showNextStep('step-2', 'step-3')">Weiter</button>
-        </div>
-        <div id="step-3">
             <label for="images">Zusätzliche Bilder:</label>
             <input type="file" name="images[]" accept="image/*" multiple>
             <label for="category">Kategorie:</label>
@@ -88,41 +64,8 @@
                 <option value="Rezepte">Rezepte</option>
             </select>
             <button class="submit_button" type="submit">Artikel speichern</button>
-        </div>
-    </form>
+        </form>
     </main>
     <script src="scripts/submit.js"></script>
-    <script>
-        function saveArticle() {
-        const formData = new FormData(document.getElementById('article-form'));
-        const token = localStorage.getItem('token');
-        const userId = localStorage.getItem('user_id');
-
-        fetch('api/save_article.php', {
-            method: 'POST',
-            headers: {
-                'Authorization': token,
-                'User-ID': userId
-            },
-            body: formData
-        })
-        .then(response => response.text())
-        .then(data => {
-            if (data.includes('Fehler')) {
-                console.error(data);
-                alert('Fehler beim Speichern des Artikels.');
-            } else {
-                alert('Artikel erfolgreich gespeichert.');
-                console.log(data);
-                document.getElementById('article-form').reset(); // Formular zurücksetzen
-            }
-        })
-        .catch(error => {
-            console.error('Fehler beim Speichern des Artikels:', error);
-            alert('Fehler beim Speichern des Artikels.');
-        });
-    }
-    </script>
-    <script src="scripts/dark-mode.js"></script>
 </body>
 </html>

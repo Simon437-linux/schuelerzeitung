@@ -424,20 +424,21 @@ body hr {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-#step-2, #step-3 {
-  border: 1px solid #ffffff;
-  border-radius: 5px;
+.submit_main {
   padding: 10px;
   margin: 10px;
-  margin-left: 500px;
-  margin-right: 500px;
-  background-color: #ffffff10;
+  margin-left: 50px;
+  margin-right: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  background-color: rgba(245, 245, 245, 0.062);
+  border: 1px solid white;
+  border-radius: 5px;
 }
 
-#step-1, #step-2, #step-3 {
+.submit_main {
   font-size: x-large;
   font-family: 'Courier New', Courier, monospace;
   -webkit-box-shadow:0px 0px 218px 0px rgba(255,255,255,1);
@@ -474,20 +475,6 @@ body hr {
 .submit_header:hover {
   color: #fff;
   transition: 0.3s linear;
-}
-
-#step-1 {
-  padding: 10px;
-  margin: 10px;
-  margin-left: 50px;
-  margin-right: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  background-color: rgba(245, 245, 245, 0.062);
-  border: 1px solid white;
-  border-radius: 5px;
 }
 
 .submit_button {
@@ -905,21 +892,6 @@ body.light-mode .gallery img:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-body.light-mode #step-2,
-body.light-mode #step-3 {
-  border: 1px solid #000000;
-  background-color: #ffffff10;
-}
-
-body.light-mode #step-1,
-body.light-mode #step-2,
-body.light-mode #step-3 {
-  font-size: x-large;
-  -webkit-box-shadow:0px 0px 218px 0px rgba(0,0,0,1);
-  -moz-box-shadow: 0px 0px 218px 0px rgba(0,0,0,1);
-  box-shadow: 0px 0px 118px 0px rgba(0,0,0,1);
-}
-
 body.light-mode #title {
   background-color: #ffffff;
   color: #000000;
@@ -937,11 +909,6 @@ body.light-mode .submit_header {
 
 body.light-mode .submit_header:hover {
   color: #000000;
-}
-
-body.light-mode #step-1 {
-  background-color: rgba(245, 245, 245, 0.062);
-  border: 1px solid #000000;
 }
 
 body.light-mode .submit_button {
@@ -1111,14 +1078,14 @@ body.dark-mode .articles-container {
     padding-right: auto;
   }
 
-  #step-2, #step-3 {
+  .submit_main {
     padding: 10px;
     margin: 10px;
     margin-left: 1px;
     margin-right: 1px;
   }
 
-  #step-1 {
+  .submit_main{
     padding: 0;
     margin: 0;
     margin-left: 0;
@@ -1126,7 +1093,7 @@ body.dark-mode .articles-container {
     border: none;
   }
 
-  #step-1, #step-2, #step-3 {
+  .submit_main {
     -webkit-box-shadow:0px 0px 0px 0px rgba(255,255,255,1);
     -moz-box-shadow: 0px 0px 0px 0px rgba(255,255,255,1);
     box-shadow: 0px 0px 0px 0px rgba(255,255,255,1);

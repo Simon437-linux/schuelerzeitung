@@ -7,25 +7,39 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Authorization, User-ID, Content-Type");
 
-function logDebug($message, $data = null) {
-    $logMessage = date('Y-m-d H:i:s') . " - " . $message;
-    if ($data !== null) {
-        $logMessage .= ": " . print_r($data, true);
-    }
-    error_log($logMessage);
-}
+function authenticate() {
+    $headers = getallheaders();
 
-logDebug("Script started");
+    if (!isset($headers['Authorization']) || !isset($headers['User-ID'])) {
+        http_response_code(401);
+        echo json_encode(['error' => "Fehlender Token oder User-ID."]);
+        exit;
+    }
+
+    $providedToken = $headers['Authorization'];
+    $providedUserId = $headers['User-ID'];
+
+    $tokenFilePath = __DIR__ . '/tokens.json';
+    if (!file_exists($tokenFilePath) || !is_readable($tokenFilePath)) {
+        http_response_code(403);
+        echo json_encode(['error' => "Authentifizierungsfehler."]);
+        exit;
+    }
+
+    $tokens = json_decode(file_get_contents($tokenFilePath), true);
+    foreach ($tokens as $entry) {
+        if ($entry['token'] === $providedToken && $entry['user_id'] === $providedUserId) {
+            return $providedUserId;
+        }
+    }
+
+    http_response_code(403);
+    echo json_encode(['error' => "Ungültiger Token oder Benutzer-ID."]);
+    exit;
+}
 
 $baseDir = dirname(__DIR__);
 $articlesDir = $baseDir . '/articles/';
-$tokenFilePath = $baseDir . '/api/tokens.json';
-
-if (!file_exists($tokenFilePath) || !is_readable($tokenFilePath)) {
-    http_response_code(403);
-    echo json_encode(['error' => "Authentifizierungsfehler."]);
-    exit;
-}
 
 if (!file_exists($articlesDir) && !mkdir($articlesDir, 0775, true)) {
     http_response_code(500);
@@ -39,39 +53,7 @@ if (!is_writable($articlesDir)) {
     exit;
 }
 
-$headers = getallheaders();
-logDebug("Received Headers", $headers);
-
-// DEBUGGING: Header ausgeben
-error_log("Empfangene Header: " . print_r($headers, true));
-file_put_contents(__DIR__ . "/debug_headers.log", print_r($headers, true));
-
-$providedToken = $headers['Authorization'] ?? $_SERVER['HTTP_AUTHORIZATION'] ?? null;
-$providedUserId = $headers['User-ID'] ?? $_SERVER['HTTP_USER_ID'] ?? null;
-
-if (!$providedToken || !$providedUserId) {
-    http_response_code(401);
-    echo json_encode(['error' => "Authentifizierungsfehler: Fehlender Token oder User-ID."]);
-    exit;
-}
-
-$tokens = json_decode(file_get_contents($tokenFilePath), true);
-$valid = false;
-$author = null;
-
-foreach ($tokens as $entry) {
-    if ($entry['token'] === $providedToken && $entry['user_id'] === $providedUserId) {
-        $valid = true;
-        $author = $entry['user_id'];
-        break;
-    }
-}
-
-if (!$valid) {
-    http_response_code(403);
-    echo json_encode(['error' => "Authentifizierungsfehler: Ungültiges Token."]);
-    exit;
-}
+$userId = authenticate();
 
 $title = $_POST['title'] ?? null;
 $content = $_POST['content'] ?? null;
@@ -120,7 +102,7 @@ if (isset($_FILES['images'])) {
 $newArticle = [
     "id" => $articleId,
     "title" => $title,
-    "author" => $author,
+    "author" => $userId,
     "content" => $content,
     "image" => $mainImage,
     "images" => $additionalImages,
@@ -139,10 +121,6 @@ if ($jsonData === false || file_put_contents($articleFilePath, $jsonData, LOCK_E
     echo json_encode(['error' => "Fehler beim Speichern des Artikels."]);
     exit;
 }
-
-logDebug("Received Headers", $headers);
-logDebug("Provided Token", $providedToken);
-logDebug("Provided User-ID", $providedUserId);
 
 chmod($articleFilePath, 0666);
 
