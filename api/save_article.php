@@ -55,7 +55,6 @@ if (!$providedToken || !$providedUserId) {
     exit;
 }
 
-tokenCheck:
 $tokens = json_decode(file_get_contents($tokenFilePath), true);
 $valid = false;
 $author = null;
@@ -140,6 +139,10 @@ if ($jsonData === false || file_put_contents($articleFilePath, $jsonData, LOCK_E
     echo json_encode(['error' => "Fehler beim Speichern des Artikels."]);
     exit;
 }
+
+logDebug("Received Headers", $headers);
+logDebug("Provided Token", $providedToken);
+logDebug("Provided User-ID", $providedUserId);
 
 chmod($articleFilePath, 0666);
 
