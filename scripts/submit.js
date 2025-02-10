@@ -1,11 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('user_id');
-    if (!token || !userId) {
-        window.location.href = 'login.html';
-        return;
-    }
-
     const form = document.getElementById('article-form');
     const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
 
@@ -24,10 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fetch('api/save_article.php', {
             method: 'POST',
-            headers: {
-                'Authorization': token,
-                'User-ID': userId
-            },
             body: formData
         })
         .then(response => response.json())

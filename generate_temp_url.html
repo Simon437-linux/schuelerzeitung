@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Temporäre URL generieren</title>
+</head>
+<body>
+    <header>
+        <h1>Temporäre URL generieren</h1>
+    </header>
+    <main>
+        <button id="generate-url-button">Neue URL generieren</button>
+        <p id="url-display"></p>
+    </main>
+    <script>
+        document.getElementById('generate-url-button').addEventListener('click', function() {
+            fetch('api/generate_temp_url.php')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('url-display').textContent = data;
+                })
+                .catch(error => {
+                    console.error('Fehler beim Generieren der URL:', error);
+                });
+        });
+    </script>
+</body>
+</html>

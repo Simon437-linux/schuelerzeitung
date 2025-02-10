@@ -5,38 +5,7 @@ ini_set('display_errors', 1);
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Authorization, User-ID, Content-Type");
-
-function authenticate() {
-    $headers = getallheaders();
-
-    if (!isset($headers['Authorization']) || !isset($headers['User-ID'])) {
-        http_response_code(401);
-        echo json_encode(['error' => "Fehlender Token oder User-ID."]);
-        exit;
-    }
-
-    $providedToken = $headers['Authorization'];
-    $providedUserId = $headers['User-ID'];
-
-    $tokenFilePath = __DIR__ . '/tokens.json';
-    if (!file_exists($tokenFilePath) || !is_readable($tokenFilePath)) {
-        http_response_code(403);
-        echo json_encode(['error' => "Authentifizierungsfehler."]);
-        exit;
-    }
-
-    $tokens = json_decode(file_get_contents($tokenFilePath), true);
-    foreach ($tokens as $entry) {
-        if ($entry['token'] === $providedToken && $entry['user_id'] === $providedUserId) {
-            return $providedUserId;
-        }
-    }
-
-    http_response_code(403);
-    echo json_encode(['error' => "Ungültiger Token oder Benutzer-ID."]);
-    exit;
-}
+header("Access-Control-Allow-Headers: Content-Type");
 
 $baseDir = dirname(__DIR__);
 $articlesDir = $baseDir . '/articles/';
@@ -53,11 +22,10 @@ if (!is_writable($articlesDir)) {
     exit;
 }
 
-$userId = authenticate();
-
 $title = $_POST['title'] ?? null;
 $content = $_POST['content'] ?? null;
 $category = $_POST['category'] ?? null;
+$author = $_POST['author'] ?? 'Anonym';
 
 if (!$title || !$content || !$category) {
     http_response_code(400);
@@ -102,7 +70,7 @@ if (isset($_FILES['images'])) {
 $newArticle = [
     "id" => $articleId,
     "title" => $title,
-    "author" => $userId,
+    "author" => $author,
     "content" => $content,
     "image" => $mainImage,
     "images" => $additionalImages,
