@@ -14,6 +14,6 @@ file_put_contents('temp_urls.json', json_encode($tempUrls));
 // Send email
 mail($email, 'Temporary Submit URL', 'Your temporary submit URL is: ' . $tempUrl);
 
-// Output the URL
-echo $tempUrl;
+// Output a confirmation message
+echo 'Temporary URL has been sent to your email.';
 ?>

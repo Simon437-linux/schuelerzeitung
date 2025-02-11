@@ -12,17 +12,18 @@
     </header>
     <main>
         <button id="generate-url-button">Neue URL generieren</button>
-        <p id="url-display"></p>
+        <p id="confirmation-message"></p>
     </main>
     <script>
         document.getElementById('generate-url-button').addEventListener('click', function() {
             fetch('api/generate_temp_url.php')
                 .then(response => response.text())
                 .then(data => {
-                    document.getElementById('url-display').textContent = data;
+                    document.getElementById('confirmation-message').textContent = 'Die temporäre URL wurde an Ihre E-Mail-Adresse gesendet.';
                 })
                 .catch(error => {
                     console.error('Fehler beim Generieren der URL:', error);
+                    document.getElementById('confirmation-message').textContent = 'Fehler beim Generieren der URL.';
                 });
         });
     </script>

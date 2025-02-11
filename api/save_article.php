@@ -1,4 +1,7 @@
 <?php
+// Überprüfung der temporären URLs
+include 'check_temp_urls.php';
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
