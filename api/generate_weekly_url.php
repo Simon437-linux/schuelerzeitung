@@ -39,7 +39,7 @@ if (!rename($originalFilePath, $newFilePath)) {
 $mailSent = mail(
     $email,
     'Neue Weekly Submit URL',
-    'Die neue Submit-URL lautet: ' . $weeklyUrl
+    'Die neue Submit-URL lautet: ' . 'https://schuelerzeitung.rswm.schule/' . $weeklyUrl
 );
 
 if (!$mailSent) {
