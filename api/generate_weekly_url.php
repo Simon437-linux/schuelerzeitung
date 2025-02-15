@@ -1,5 +1,5 @@
 <?php
-$email = 'schuelerzeitung@rswm.de'; // E-Mail ersetzen
+$email = 'Max@musterman.de'; // E-Mail ersetzen
 
 // Dynamisch nach vorhandenen Submit-Dateien suchen
 $submissionFiles = glob('../submit_*.html');
