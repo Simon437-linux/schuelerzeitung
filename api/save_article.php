@@ -1,7 +1,4 @@
 <?php
-// Überprüfung der temporären URLs
-include 'check_temp_urls.php';
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -102,4 +99,7 @@ echo json_encode([
     "mainImage" => $mainImage,
     "additionalImages" => $additionalImages
 ]);
+
+// Führe generate_weekly_url.php aus
+include 'generate_weekly_url.php';
 ?>

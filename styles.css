@@ -527,10 +527,11 @@ body hr {
   padding: 25px;
   border-radius: 10px 0 0 10px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  border: 1px solid white;
+  border: 1px solid rgb(80, 80, 80);
   border-right: 0;
   transition: right 0.3s ease-in-out;
   z-index: 5;
+  background-color: #161616;
 }
 
 .sidebar.show {
@@ -586,10 +587,11 @@ body hr {
   padding: 25px;
   border-radius: 0 10px 10px 0;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  border: 1px solid white;
+  border: 1px solid rgb(80, 80, 80);
   border-left: 0;
   transition: left 0.3s ease-in-out;
   z-index: 5;
+  background-color: #161616;
 }
 
 .sidebar-right.show {
@@ -696,6 +698,10 @@ body.light-mode header {
 }
 
 body.light-mode header h1 {
+  color: #000000;
+}
+
+body.light-mode .latest-article-content h1 {
   color: #000000;
 }
 
@@ -1145,7 +1151,7 @@ body.dark-mode .articles-container {
   }
 
   #article-container p {
-    margin-right: 10px;
+    margin-right: 0;
   }
 
   .header-container{

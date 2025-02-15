@@ -1,10 +1,9 @@
 <?php
-$baseUrl = 'https://schuelerzeitung.rswm.schule/';
-$weeklyUrl = $baseUrl . 'submit_' . bin2hex(random_bytes(16)) . '.html';
+$weeklyUrl = 'submit_' . bin2hex(random_bytes(16)) . '.html';
 $email = 'schuelerzeitung@rswm.de'; // Replace with your email
 
 // Pfad zur ursprünglichen und neuen Datei
-$originalFilePath = '../submit.html';
+$originalFilePath = '../submit' . $weeklyUrl . '.html';
 $newFilePath = '../' . basename($weeklyUrl);
 
 // Überprüfen, ob die ursprüngliche Datei existiert

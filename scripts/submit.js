@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('article-form');
     const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50 MB
 
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function(event) { 
         event.preventDefault();
 
         const mainImageInput = document.querySelector('input[name="main_image"]');
@@ -19,15 +19,22 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'POST',
             body: formData
         })
-        .then(response => response.json())
+        .then(response => response.text())
         .then(data => {
-            if (data.error) {
-                console.error("Fehler beim Speichern des Artikels:", data.error);
-            } else {
-                console.log("Artikel erfolgreich gespeichert:", data);
-                alert('Artikel erfolgreich gespeichert.');
-                form.reset();
-                tinymce.get('content').setContent('');
+            try {
+                const jsonData = JSON.parse(data); // Versuchen Sie, die Antwort zu parsen
+                if (jsonData.error) {
+                    console.error("Fehler beim Speichern des Artikels:", jsonData.error);
+                } else {
+                    console.log("Artikel erfolgreich gespeichert:", jsonData);
+                    alert('Artikel erfolgreich gespeichert.');
+                    form.reset();
+                    tinymce.get('content').setContent('');
+                }
+            } catch (error) {
+                console.error("Fehler beim Parsen der JSON-Antwort:", error);
+                console.error("Serverantwort:", data); // Geben Sie die Serverantwort aus
+                alert('Fehler beim Speichern des Artikels: ' + data); // Geben Sie die Serverantwort in der Fehlermeldung aus
             }
         })
         .catch(error => {

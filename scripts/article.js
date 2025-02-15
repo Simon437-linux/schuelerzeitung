@@ -1,17 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Check if the user is authenticated
-    const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('user_id');
-
-    // Check the current page
-    const currentPage = window.location.pathname.split('/').pop();
-
-    if (currentPage === 'submit.html' && (!token || !userId)) {
-        // Redirect to login page for submitting articles
-        window.location.href = 'login.html';
-        return;
-    }
-
     loadArticle();
 });
 

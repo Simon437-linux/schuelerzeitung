@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Artikel erstellen</title>
+    <script src="https://cdn.tiny.cloud/1/lyeu8216j58bfcg4vu4t6d48ev74csdvss7z2qcug46vrves/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            tinymce.init({
+                selector: 'textarea',
+                plugins: [
+                    "advlist", "anchor", "autolink", "charmap", "code", "fullscreen",
+                    "help", "image", "insertdatetime", "link", "lists", "media",
+                    "preview", "searchreplace", "table", "visualblocks", "accordion",
+                    "wordcount", "fullscreen", "help", "media", "code", "quickbars"
+                    ],
+                height: 500,
+                toolbar: "undo redo |link image accordion | styles | bold italic underline strikethrough | align | bullist numlist | fullscreen",
+            });
+        });
+    </script>
+</head>
+<body class="submit">
+    <header>
+        <h1 class="submit_header">Artikel erstellen</h1>
+    </header>
+    <main class="submit_main">
+        <form id="article-form" method="POST" enctype="multipart/form-data">
+            <label for="author">Name:</label>
+            <input type="text" name="author" id="author" required>
+            <label for="title">Titel des Artikels:</label>
+            <input type="text" name="title" id="title" required>
+            <textarea class="text" name="content" id="content" required></textarea>
+            <label for="main_image">Hauptbild:</label>
+            <input type="file" name="main_image" accept="image/*" required>
+            <label for="images">Zusätzliche Bilder:</label>
+            <input type="file" name="images[]" accept="image/*" multiple>
+            <label for="category">Kategorie:</label>
+            <select name="category" required>
+                <option value="">Kategorie wählen</option>
+                <option value="über_uns">über uns</option>
+                <option value="Sonderausgaben">Sonderausgaben</option>
+                <option value="interviews">interviews</option>
+                <option value="Wissenschaft">Wissenschaft</option>
+                <option value="ratsch_und_tratsch">ratsch_und_tratsch</option>
+                <option value="Film_vorstellungen">Film_vorstellungen</option>
+                <option value="Bücher_vorstellungen">Bücher_vorstellungen</option>
+                <option value="Musik_vorstellungen">Musik_vorstellungen</option>
+                <option value="Rezepte">Rezepte</option>
+                <option value="Was_macht_eigentlich...">Was macht eigendlich...</option>
+            </select>
+            <button class="submit_button" type="submit">Artikel speichern</button>
+        </form>
+    </main>
+    <script src="scripts/submit.js"></script>
+</body>
+</html>
