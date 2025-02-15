@@ -1,32 +1,51 @@
 <?php
+$email = 'schuelerzeitung@rswm.de'; // E-Mail ersetzen
+
+// Dynamisch nach vorhandenen Submit-Dateien suchen
+$submissionFiles = glob('../submit_*.html');
+
+// Ursprüngliche Datei bestimmen
+if (!empty($submissionFiles)) {
+    // Neueste Datei zuerst sortieren (falls mehrere)
+    usort($submissionFiles, function($a, $b) {
+        return filemtime($b) - filemtime($a);
+    });
+    $originalFilePath = $submissionFiles[0];
+} else {
+    $originalFilePath = '../submit.html';
+}
+
+// Neuen zufälligen Dateinamen generieren
 $weeklyUrl = 'submit_' . bin2hex(random_bytes(16)) . '.html';
-$email = 'schuelerzeitung@rswm.de'; // Replace with your email
+$newFilePath = '../' . $weeklyUrl;
 
-// Pfad zur ursprünglichen und neuen Datei
-$originalFilePath = '../submit' . $weeklyUrl . '.html';
-$newFilePath = '../' . basename($weeklyUrl);
+// Debugging
+error_log('Original File: ' . $originalFilePath);
+error_log('New File: ' . $newFilePath);
 
-// Überprüfen, ob die ursprüngliche Datei existiert
+// Überprüfen ob Original existiert
 if (!file_exists($originalFilePath)) {
-    error_log('Fehler: Die Datei submit.html existiert nicht.');
-    echo 'Fehler: Die Datei submit.html existiert nicht.';
-    exit;
+    error_log('Fehler: Datei existiert nicht');
+    exit('Fehler: Datei existiert nicht');
 }
 
-// Umbenennen der Datei
+// Datei umbenennen
 if (!rename($originalFilePath, $newFilePath)) {
-    error_log('Fehler: Die Datei konnte nicht umbenannt werden.');
-    echo 'Fehler: Die Datei konnte nicht umbenannt werden.';
-    exit;
+    error_log('Umbenennen fehlgeschlagen');
+    exit('Fehler beim Umbenennen');
 }
 
-// Send email
-if (!mail($email, 'Weekly Submit URL', 'Your new submit URL is: ' . $weeklyUrl)) {
-    error_log('Fehler: Die E-Mail konnte nicht gesendet werden.');
-    echo 'Fehler: Die E-Mail konnte nicht gesendet werden.';
-    exit;
+// E-Mail senden
+$mailSent = mail(
+    $email,
+    'Neue Weekly Submit URL',
+    'Die neue Submit-URL lautet: ' . $weeklyUrl
+);
+
+if (!$mailSent) {
+    error_log('E-Mail Fehler');
+    exit('E-Mail konnte nicht gesendet werden');
 }
 
-// Save the URL to a file
-file_put_contents('current_weekly_url.txt', $weeklyUrl);
+echo 'Erfolgreich: Datei wurde umbenannt und E-Mail versendet.';
 ?>
